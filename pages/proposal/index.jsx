@@ -10,7 +10,7 @@ const Proposals = (props) => {
   const printRef = useRef();
 
   useEffect(() => {
-    layoutVar({ ...layoutVar(), isDrawerOpen: true, printRef: printRef });
+    layoutVar({ ...layoutVar(), isDrawerOpen: false, printRef: printRef });
   }, []);
 
   return (

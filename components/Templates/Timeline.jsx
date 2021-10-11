@@ -3,7 +3,6 @@ import { Page } from "components/Page";
 import { styled } from "stitches.config";
 
 const Title = styled(Text, {
-  fontFamily: "News Cycle",
   fontSize: "28px",
   letterSpacing: "1px",
   lineHeight: "1em",
@@ -64,7 +63,7 @@ const TimelineTemplate = () => {
           }}
         >
           <Box css={{ borderRight: "1px solid black", paddingRight: "1em" }}>
-            <Title css={{ fontFamily: "News Cycle" }}>
+            <Title>
               Timelines are variable and we want to be honest with you...
             </Title>
             <Description css={{ marginTop: "5em" }}>
