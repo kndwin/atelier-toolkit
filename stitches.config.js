@@ -13,9 +13,11 @@ export const {
     colors: {
       dark: "black",
       light: "white",
-			primary: "#0069F1",
-			red: "#ec5a24", 
-			offWhite: "rgba(255,150,15,0.05)",
+      primary: "#0069F1",
+      red: "#ec5a24",
+      green: "#7BC369",
+      offWhite: "rgba(255,150,15,0.05)",
+      orange: "#FAAF4A",
 
       gray100: "hsl(206,22%,99%)",
       gray200: "hsl(206,12%,97%)",

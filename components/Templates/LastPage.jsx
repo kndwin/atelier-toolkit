@@ -6,7 +6,15 @@ import { useReactiveVar } from "@apollo/client";
 import { customerVar } from "apollo/reactiveVar/customer";
 import { Page } from "components/Page";
 
-export const FrontPageTemplate = () => {
+const GreenStar = styled(Star, {
+  g: {
+    path: {
+      fill: "$green",
+    },
+  },
+});
+
+export const LastPageTemplate = () => {
   const { customer } = useReactiveVar(customerVar);
   const payload = {
     description: `This document is a proposal, prepared witha sense of wonder and an analytical mind, the purpose is to illustrate the way atelier can develop a range of beatiful products coneptuslised with scientific rigor for ${customer}`,
@@ -63,7 +71,7 @@ export const FrontPageTemplate = () => {
             src={payload?.image}
             alt=""
           />
-          <Star
+          <GreenStar
             style={{
               position: "absolute",
               left: "-80px",
@@ -76,17 +84,19 @@ export const FrontPageTemplate = () => {
           />
           <Text
             css={{
-              fontSize: "26px",
+              fontSize: "20px",
               fontFamily: "Arktiv Grotesk",
               transform: "rotate(15deg)",
               color: "$light",
               width: "fit-content",
               position: "absolute",
-              left: "-26px",
-              top: "-38px",
+              left: "-24px",
+              textAlign: "center",
+              top: "-40px",
             }}
           >
-            Hello!
+            Thank <br />
+            you!
           </Text>
           <Box
             css={{

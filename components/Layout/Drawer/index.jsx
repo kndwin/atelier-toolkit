@@ -6,7 +6,7 @@ import ProposalMinimap from "./ProposalMinimap";
 const DrawerWrapper = styled(Box, {
   height: "100%",
   background: "$primary",
-  transition: "0.5s ease",
+  transition: "1s ease",
   variants: {
     isOpen: {
       true: {
@@ -30,7 +30,7 @@ const Drawer = ({ isOpen }) => {
   const router = useRouter();
   return (
     <DrawerWrapper isOpen={isOpen}>
-			<ProposalMinimap />
+      <ProposalMinimap />
     </DrawerWrapper>
   );
 };

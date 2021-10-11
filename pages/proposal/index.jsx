@@ -1,30 +1,23 @@
 import { styled } from "@stitches/react";
 import { layoutVar } from "apollo/reactiveVar/layout";
-import { Box, Text } from "components";
+import { Box } from "components";
 import Layout from "components/Layout";
-import React, { useEffect } from "react";
-import {WhoWeAreTemplate} from "components/Templates/WhoWeAre";
-import {ImagineAPlatform} from "components/Templates/ImagineAPlatform";
-import {FrontPageTemplate} from "components/Templates/FrontPage";
+import React, { useEffect, useRef } from "react";
 import Templates from "components/Templates";
-
-const Page = styled(Box, {
-  border: "1px solid $dark",
-  borderRadius: "15px",
-  margin: "$3",
-  height: "40em",
-  background: "$light",
-  width: "66em",
-  margin: "3em auto",
-});
+import { useReactToPrint } from "react-to-print";
 
 const Proposals = (props) => {
+  const printRef = useRef();
+
   useEffect(() => {
-    layoutVar({ ...layoutVar(), isDrawerOpen: true });
+    layoutVar({ ...layoutVar(), isDrawerOpen: true, printRef: printRef });
   }, []);
+
   return (
     <Layout>
-      <ProposalTemplates />
+      <div ref={printRef}>
+        <ProposalTemplates />
+      </div>
     </Layout>
   );
 };
@@ -32,25 +25,23 @@ const Proposals = (props) => {
 export default Proposals;
 
 const ProposalTemplatesWrapper = styled(Box, {
-  variants: {
-    minimap: {
-      true: {
-        height: "1em",
-      },
-    },
+  "@media print": {
+    position: "absolute",
+    top: "0",
+    left: "0",
+    background: "white",
+    zIndex: "10",
+    height: "100vh",
+    width: "100vw",
   },
 });
 
-
 export const ProposalTemplates = ({ minimap }) => {
   return (
-		<ProposalTemplatesWrapper minimap={minimap}>
-			{Templates.map((component, key) => (
-				<Page key={key}>
-					{component}
-				</Page>
-			))}
-		</ProposalTemplatesWrapper>
-	);
+    <ProposalTemplatesWrapper>
+      {Templates.map((component, index) => (
+        <div key={index}>{component}</div>
+      ))}
+    </ProposalTemplatesWrapper>
+  );
 };
-

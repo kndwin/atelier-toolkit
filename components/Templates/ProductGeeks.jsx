@@ -1,4 +1,5 @@
 import { Text, Box, Img } from "components";
+import { Page } from "components/Page";
 
 const ProductGeeksTemplate = (props) => {
   const payload = {
@@ -6,26 +7,28 @@ const ProductGeeksTemplate = (props) => {
     image: "/images/product-geeks.png",
   };
   return (
-    <Box
-      css={{
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        margin: "0 auto",
-        width: "90%",
-      }}
-    >
-      <Text
+    <Page>
+      <Box
         css={{
-          fontFamily: "Orelo",
-          fontSize: "40px",
-          textTransform: "uppercase",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          margin: "0 auto",
+          width: "90%",
         }}
       >
-        {payload?.description}
-      </Text>
-      <Img css={{ height: "80%" }} src={payload?.image} />
-    </Box>
+        <Text
+          css={{
+            fontFamily: "Orelo",
+            fontSize: "40px",
+            textTransform: "uppercase",
+          }}
+        >
+          {payload?.description}
+        </Text>
+        <Img css={{ height: "80%" }} src={payload?.image} />
+      </Box>
+    </Page>
   );
 };
 

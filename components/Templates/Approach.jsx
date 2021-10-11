@@ -1,6 +1,7 @@
 import { useReactiveVar } from "@apollo/client";
 import { customerVar } from "apollo/reactiveVar/customer";
 import { Box, Img, Text } from "components";
+import { Page } from "components/Page";
 
 const ApproachTemplate = (props) => {
   const { customer } = useReactiveVar(customerVar);
@@ -10,41 +11,43 @@ const ApproachTemplate = (props) => {
     image: "/images/approach.png",
   };
   return (
-    <Box
-      css={{
-        display: "flex",
-        height: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "90%",
-        margin: "0 auto",
-      }}
-    >
-      <Text
+    <Page>
+      <Box
         css={{
-          fontFamily: "Arktiv Grotesk",
-          fontSize: "$6",
-          width: "10em",
-          marginBottom: "5em",
+          display: "flex",
+          height: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "90%",
+          margin: "0 auto",
         }}
       >
-        {payload?.question}
-      </Text>
-      <Text
-        css={{
-          whiteSpace: "pre-wrap",
-          fontFamily: "News Cycle",
-          lineHeight: "1em",
-          fontSize: "$3",
-          margin: "0 3em",
-          width: "19em",
-          letterSpacing: "0.9px",
-        }}
-      >
-        {payload?.content}
-      </Text>
-      <Img css={{ height: "80%" }} src={payload?.image} />
-    </Box>
+        <Text
+          css={{
+            fontFamily: "Arktiv Grotesk",
+            fontSize: "$6",
+            width: "10em",
+            marginBottom: "5em",
+          }}
+        >
+          {payload?.question}
+        </Text>
+        <Text
+          css={{
+            whiteSpace: "pre-wrap",
+            fontFamily: "News Cycle",
+            lineHeight: "1em",
+            fontSize: "$3",
+            margin: "0 3em",
+            width: "19em",
+            letterSpacing: "0.9px",
+          }}
+        >
+          {payload?.content}
+        </Text>
+        <Img css={{ height: "80%" }} src={payload?.image} />
+      </Box>
+    </Page>
   );
 };
 

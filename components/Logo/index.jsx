@@ -5,9 +5,9 @@ const LogoWrapper = styled("div", {
   position: "absolute",
   height: "2em",
   width: "2em",
-  top: "2px",
+  top: "3em",
   right: "1.25em",
-	transition: "all .5s ease",
+  transition: "all 1s ease",
   svg: {
     rect: {
       fill: "$primary",
@@ -23,7 +23,7 @@ const LogoWrapper = styled("div", {
   variants: {
     reversed: {
       true: {
-				transition: "all .5s ease",
+        transition: "all 1s ease",
         top: "1em",
         right: "1em",
         svg: {

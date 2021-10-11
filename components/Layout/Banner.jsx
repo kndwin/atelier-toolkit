@@ -5,6 +5,7 @@ import { layoutVar } from "apollo/reactiveVar/layout";
 import { Box, Text, Input, Button } from "components";
 import Link from "next/link";
 import { useState } from "react";
+import { useReactToPrint } from "react-to-print";
 import { submitProposal } from "utils/apis/submitProposal";
 
 const BannerWrapper = styled(Box, {
@@ -18,7 +19,7 @@ const BannerWrapper = styled(Box, {
 
 const Banner = ({ page }) => {
   const { customer } = useReactiveVar(customerVar);
-  const { isDrawerOpen } = useReactiveVar(layoutVar);
+  const { printRef } = useReactiveVar(layoutVar);
   const [error, setError] = useState();
   const [fetchStatus, setFetchStatus] = useState(false);
   const submitProposalHandler = async () => {
@@ -30,6 +31,11 @@ const Banner = ({ page }) => {
       setFetchStatus(false);
     }
   };
+
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+  });
+
   return (
     <>
       {page === "/proposal" && (
@@ -56,16 +62,20 @@ const Banner = ({ page }) => {
                 css={{ background: "$offwhite", width: "17em" }}
               />
             </Box>
-						<Box css={{ display: "flex", alignItems: 'center'}}>
-							{!!error && <Text bold color="error" css={{marginRight: "1em"}}>{error}</Text>}
-							<Button>Print PDF</Button>
-							<Link href={`/proposal/${customer}`}>
-								<Button
-									loading={fetchStatus}
+            <Box css={{ display: "flex", alignItems: "center" }}>
+              {!!error && (
+                <Text bold color="error" css={{ marginRight: "1em" }}>
+                  {error}
+                </Text>
+              )}
+              <Button onClick={() => handlePrint()}>Print PDF</Button>
+              <Link href={`/proposal/${customer}`}>
+                <Button
+                  loading={fetchStatus}
                   onClick={() => submitProposalHandler()}
                   css={{
                     marginX: "$3",
-                    marginRight: isDrawerOpen ? "1em" : "4em",
+                    marginRight: "1em",
                   }}
                 >
                   Preview
