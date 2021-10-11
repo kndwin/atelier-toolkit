@@ -22,6 +22,7 @@ const Banner = ({ page }) => {
   const { printRef } = useReactiveVar(layoutVar);
   const [error, setError] = useState();
   const [fetchStatus, setFetchStatus] = useState(false);
+  const checkError = () => {};
   const submitProposalHandler = async () => {
     if (customer.length == 0) {
       setError("Please enter a customer name!");
@@ -32,9 +33,17 @@ const Banner = ({ page }) => {
     }
   };
 
-  const handlePrint = useReactToPrint({
+  const print = useReactToPrint({
     content: () => printRef.current,
   });
+
+  const handlePrint = () => {
+    if (customer.length == 0) {
+      setError("Please enter a customer name!");
+    } else {
+      print();
+    }
+  };
 
   return (
     <>

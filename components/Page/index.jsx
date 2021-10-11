@@ -9,6 +9,7 @@ export const Page = styled("div", {
   width: "66em",
   margin: "3em auto",
   "@media print": {
+    padding: "0 4em",
     height: "100%",
     width: "100%",
     size: "A4 landscape",
