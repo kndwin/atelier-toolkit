@@ -1,5 +1,5 @@
-import {makeVar} from "@apollo/client";
+import { makeVar } from "@apollo/client";
 
 export const customerVar = makeVar({
-	customer: ""
-})
+  customer: "",
+});

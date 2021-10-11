@@ -2,6 +2,8 @@ import { styled } from "@stitches/react";
 import { Box, Text, Img, Input } from "components";
 import { useState, useEffect } from "react";
 import { Page } from "components/Page";
+import { useReactiveVar } from "@apollo/client";
+import { pricingVar } from "apollo/reactiveVar/pricing";
 
 const Header = styled(Text, {
   margin: "0",
@@ -56,42 +58,34 @@ const AddRow = styled(Box, {
 });
 
 const RangeTemplate = (props) => {
-  const [payload, setPayload] = useState([
-    {
-      title: "Multi-Purpose Spray 1",
-      caption: "500ML",
-      image: "/svg/spray-bottle.svg",
-      pricing: [
-        { qty: 1000, cost: 5.2, rrp: 14 },
-        { qty: 1000, cost: 5.2, rrp: 14 },
-      ],
-    },
-    {
-      title: "Multi-Purpose Spray 2",
-      caption: "500ML",
-      image: "/svg/soap-bottle.svg",
-      pricing: [
-        { qty: 1000, cost: 5.2, rrp: 14 },
-        { qty: 1000, cost: 5.2, rrp: 14 },
-      ],
-    },
-  ]);
+  const payload = useReactiveVar(pricingVar);
+
+  useEffect(() => {
+    // console.log("useEffect");
+    // console.table(payload);
+  }, [payload]);
 
   const updatePrice =
     ({ index, type, priceIndex }) =>
     (e) => {
       let newPayload = [...payload];
       newPayload[index]["pricing"][priceIndex][type] = e?.target?.value;
-      console.log({ index, payload, newPayload });
-      setPayload(newPayload);
+      pricingVar(newPayload);
     };
+
+  const updateTitle = ({ index, type, title}) => {
+    let newPayload = [...payload];
+    newPayload[index][type] = title;
+    pricingVar(newPayload);
+  }
 
   const updateText =
     ({ index, type }) =>
     (e) => {
       let newPayload = [...payload];
       newPayload[index][type] = e?.target?.value;
-      setPayload(newPayload);
+      console.table(payload);
+      pricingVar(newPayload);
     };
 
   const addProduct = () => {
@@ -104,13 +98,19 @@ const RangeTemplate = (props) => {
         { qty: 1000, cost: 5.2, rrp: 14 },
       ],
     };
-    setPayload([...payload, newProduct]);
+    pricingVar([...payload, newProduct]);
   };
 
   const deleteRow = (index) => {
     let newPayload = payload.filter((load, i) => i !== index);
-    console.log({ index, payload, newPayload });
-    setPayload([...newPayload]);
+    pricingVar([...newPayload]);
+  };
+
+  const updateImage = ({ index, image }) => {
+    let newPayload = [...payload];
+    newPayload[index].image = image;
+    // console.table(newPayload, payload);
+    pricingVar(newPayload);
   };
 
   return (
@@ -142,8 +142,10 @@ const RangeTemplate = (props) => {
         </Box>
         {payload?.slice(0, 5)?.map((load, index) => (
           <ProductRow
+            updateImage={updateImage}
             index={index}
             updatePrice={updatePrice}
+            updateTitle={updateTitle}
             updateText={updateText}
             deleteRow={deleteRow}
             key={`${load?.title} ${index}`}
@@ -183,8 +185,10 @@ const RangeTemplate = (props) => {
           </Box>
           {payload?.slice(5, 11)?.map((load, index) => (
             <ProductRow
+              updateImage={updateImage}
               index={index + 5}
               updatePrice={updatePrice}
+              updateTitle=
               updateText={updateText}
               deleteRow={deleteRow}
               key={`${load?.title} ${index}`}
@@ -227,7 +231,7 @@ const ImageSelected = styled(Img, {
   },
 });
 
-const DropdownImages = () => {
+const DropdownImages = ({ index, updateImage }) => {
   const images = [
     "/svg/soap-bottle.svg",
     "/svg/soap-bottle-2.svg",
@@ -240,6 +244,8 @@ const DropdownImages = () => {
 
   const [image, setImage] = useState(images[0]);
   const [showOptions, setShowOptions] = useState(false);
+
+  useEffect(() => updateImage({ index, image }), [image]);
 
   return (
     <Box css={{ position: "relative" }}>
@@ -290,6 +296,7 @@ const PrintTextarea = styled("div", {
   },
 });
 const TitleInput = ({ defaultValue, updateText, index }) => {
+
   const [title, setTitle] = useState();
   useEffect(() => {
     setTitle(defaultValue);
@@ -298,8 +305,8 @@ const TitleInput = ({ defaultValue, updateText, index }) => {
   return (
     <>
       <Textarea
-        onBlur={updateText({ index, type: "title" })}
         value={title}
+        onBlur={updateText({ index, type: "title" })}
         onChange={(e) => setTitle(e.target.value)}
         id="textarea"
         name="textarea"
@@ -342,12 +349,13 @@ const ProductRow = ({
   payload,
   noBorder,
   updatePrice,
+  updateImage,
   deleteRow,
   updateText,
   index,
 }) => {
   return (
-    <Row key={index}>
+    <Row key={index + payload?.title}>
       <Box
         css={{
           display: "flex",
@@ -358,7 +366,7 @@ const ProductRow = ({
           height: "100%",
         }}
       >
-        <DropdownImages />
+        <DropdownImages index={index} updateImage={updateImage} />
         <Box>
           <TitleInput
             index={index}
