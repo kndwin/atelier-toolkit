@@ -1,7 +1,6 @@
 import { styled } from "@stitches/react";
-import { Box, Text, Img } from "components";
-import { useState } from "react";
-import Bottle from "public/svg/bottle-1.svg";
+import { Box, Text, Img, Input } from "components";
+import { useState, useEffect } from "react";
 import { Page } from "components/Page";
 
 const Header = styled(Text, {
@@ -28,6 +27,34 @@ const Cell = styled(Box, {
   fontSize: "12px",
 });
 
+const InputCell = styled(Input, {
+  width: "5em",
+  padding: "0",
+});
+
+const AddRow = styled(Box, {
+  background: "transparent",
+  width: "100%",
+  height: "3em",
+  border: "1px solid transparent",
+  borderRadius: "10px",
+  margin: ".5em 0",
+  cursor: "pointer",
+  "&:hover": {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    "&::after": {
+      textTransform: "uppercase",
+      fontFamily: "Arktiv Grotesk",
+      content: "Add a product",
+      color: "black",
+    },
+    transition: ".5s ease",
+    borderColor: "black",
+  },
+});
+
 const RangeTemplate = (props) => {
   const [payload, setPayload] = useState([
     {
@@ -48,61 +75,29 @@ const RangeTemplate = (props) => {
         { qty: 1000, cost: 5.2, rrp: 14 },
       ],
     },
-    {
-      title: "Multi-Purpose Spray 3",
-      caption: "500ML",
-      image: "/svg/soap-box.svg",
-      pricing: [
-        { qty: 1000, cost: 5.2, rrp: 14 },
-        { qty: 1000, cost: 5.2, rrp: 14 },
-      ],
-    },
-    {
-      title: "Dishwashing bottle",
-      caption: "500ML",
-      image: "/svg/dishwashing-bottle.svg",
-      pricing: [
-        { qty: 1000, cost: 5.2, rrp: 14 },
-        { qty: 1000, cost: 5.2, rrp: 14 },
-      ],
-    },
-    {
+  ]);
+
+  const updatePrice =
+    ({ index, type, priceIndex }) =>
+    (e) => {
+      let newPayload = [...payload];
+      newPayload[index]["pricing"][priceIndex][type] = e?.target?.value;
+      setPayload(newPayload);
+    };
+
+  const addProduct = () => {
+    let newProduct = {
       title: "Multi-Purpose Spray 2",
       caption: "500ML",
-      image: "/svg/soap-bottle-2.svg",
+      image: "/svg/soap-bottle.svg",
       pricing: [
         { qty: 1000, cost: 5.2, rrp: 14 },
         { qty: 1000, cost: 5.2, rrp: 14 },
       ],
-    },
-    {
-      title: "Dishwashing bottle",
-      caption: "500ML",
-      image: "/svg/dishwashing-bottle.svg",
-      pricing: [
-        { qty: 1000, cost: 5.2, rrp: 14 },
-        { qty: 1000, cost: 5.2, rrp: 14 },
-      ],
-    },
-    {
-      title: "Laundry Box",
-      caption: "500ML",
-      image: "/svg/laundry-box.svg",
-      pricing: [
-        { qty: 1000, cost: 5.2, rrp: 14 },
-        { qty: 1000, cost: 5.2, rrp: 14 },
-      ],
-    },
-    {
-      title: "Toilet Bottle",
-      caption: "500ML",
-      image: "/svg/toilet-bottle.svg",
-      pricing: [
-        { qty: 1000, cost: 5.2, rrp: 14 },
-        { qty: 1000, cost: 5.2, rrp: 14 },
-      ],
-    },
-  ]);
+    };
+    setPayload([...payload, newProduct]);
+  };
+
   return (
     <>
       <Page
@@ -124,7 +119,7 @@ const RangeTemplate = (props) => {
           css={{
             display: "grid",
             width: "100%",
-            gridTemplateColumns: "15.5em 1fr",
+            gridTemplateColumns: "16.3em 1fr",
           }}
         >
           <Header>Product</Header>
@@ -132,6 +127,8 @@ const RangeTemplate = (props) => {
         </Box>
         {payload?.slice(0, 5)?.map((load, index) => (
           <ProductRow
+            index={index}
+            updatePrice={updatePrice}
             key={`${load?.title} ${index}`}
             noBorder={
               (index + 1) % (payload.length < 5 ? payload.length : 5) === 0
@@ -139,6 +136,7 @@ const RangeTemplate = (props) => {
             payload={load}
           />
         ))}
+        {payload?.length <= 5 && <AddRow onClick={() => addProduct()} />}
       </Page>
       {payload?.length > 5 && (
         <Page
@@ -168,11 +166,14 @@ const RangeTemplate = (props) => {
           </Box>
           {payload?.slice(5, 11)?.map((load, index) => (
             <ProductRow
+              index={index + 5}
+              updatePrice={updatePrice}
               key={`${load?.title} ${index}`}
               noBorder={(index + 1) % (payload?.length - 5) === 0}
               payload={load}
             />
           ))}
+          {payload?.length < 11 && <AddRow onClick={() => addProduct()} />}
         </Page>
       )}
     </>
@@ -181,7 +182,89 @@ const RangeTemplate = (props) => {
 
 export default RangeTemplate;
 
-const ProductRow = ({ payload, noBorder }) => {
+const ImageOptions = styled(Box, {
+  position: "absolute",
+  background: "white",
+  flexWrap: "wrap",
+  display: "flex",
+  objectFit: "scale-down",
+  border: "1px solid black",
+  width: "29em",
+  height: "29em",
+  padding: "1em",
+  borderRadius: "10px",
+  zIndex: "5",
+});
+
+const ImageSelected = styled(Img, {
+  width: "5em",
+  height: "5em",
+  objectFit: "scale-down",
+  marginRight: "1em",
+  cursor: "pointer",
+  "&:hover": {
+    transition: ".5s ease",
+    transform: "scale(1.2)",
+  },
+});
+
+const DropdownImages = () => {
+  const images = [
+    "/svg/soap-bottle.svg",
+    "/svg/soap-bottle-2.svg",
+    "/svg/soap-box.svg",
+    "/svg/dishwashing-bottle.svg",
+    "/svg/laundry-box.svg",
+    "/svg/spray-bottle.svg",
+    "/svg/toilet-bottle.svg",
+  ];
+
+  const [image, setImage] = useState(images[0]);
+  const [showOptions, setShowOptions] = useState(false);
+
+  return (
+    <Box css={{ position: "relative" }}>
+      <ImageSelected onClick={() => setShowOptions(!showOptions)} src={image} />
+      {showOptions && (
+        <ImageOptions>
+          {images.map((image) => (
+            <Img
+              css={{
+                margin: "1em",
+                zIndex: "10",
+                cursor: "pointer",
+                objectFit: "scale-down",
+                "&:hover": {
+                  transition: ".5s ease",
+                  transform: "scale(1.2)",
+                },
+              }}
+              onClick={() => {
+                setImage(image);
+                setShowOptions(false);
+              }}
+              src={image}
+            />
+          ))}
+        </ImageOptions>
+      )}
+    </Box>
+  );
+};
+
+const TitleInput = styled("textarea", {
+  width: "100%",
+  fontFamily: "Arktiv Grotesk",
+  letterSpacing: "0.9px",
+  padding: "0",
+  marginBottom: "0",
+  fontSize: "16px",
+  resize: "none",
+  border: "none",
+  height: "fit-content",
+});
+
+const ProductRow = ({ payload, noBorder, updatePrice, index }) => {
   return (
     <Row>
       <Box
@@ -194,26 +277,10 @@ const ProductRow = ({ payload, noBorder }) => {
           height: "100%",
         }}
       >
-        <Img
-          css={{
-            height: "3em",
-            width: "3em",
-            objectFit: "contain",
-            margin: "0 1em",
-          }}
-          src={payload.image}
-        />
+        <DropdownImages />
         <Box>
-          <Text
-            css={{
-              fontFamily: "Arktiv Grotesk",
-              letterSpacing: "0.9px",
-              marginBottom: "0",
-            }}
-          >
-            {payload.title}
-          </Text>
-          <Text css={{ fontSize: "12px" }}>{payload.caption}</Text>
+          <TitleInput cols="40" rows="2" defaultValue={payload?.title} />
+          <Input css={{ fontSize: "12px", padding: "0" }} />
         </Box>
       </Box>
       <Box
@@ -241,16 +308,27 @@ const ProductRow = ({ payload, noBorder }) => {
             <Header>TOTAL REV</Header>
             <Header>UNITS SOLD TO BREAK EVEN</Header>
           </PricingRow>
-          {payload.pricing.map(({ qty, cost, rrp }) => (
-            <PricingRow>
-              <Cell>{parseFloat(qty).toLocaleString()}</Cell>
-              <Cell>${parseFloat(cost).toFixed(2)}</Cell>
-              <Cell>${parseFloat(rrp).toFixed(2)}</Cell>
+          {payload.pricing.map(({ qty, cost, rrp }, priceIndex) => (
+            <PricingRow key={index}>
+              <InputCell
+                onChange={updatePrice({ index, type: "qty", priceIndex })}
+                defaultValue={parseFloat(qty).toLocaleString()}
+              />
+              <InputCell
+                onChange={updatePrice({ index, type: "cost", priceIndex })}
+                defaultValue={parseFloat(cost).toFixed(2)}
+              />
+              <InputCell
+                onChange={updatePrice({ index, type: "rrp", priceIndex })}
+                defaultValue={parseFloat(rrp).toFixed(2)}
+              />
               <Cell>{parseFloat((cost / rrp) * 100).toFixed(2)}%</Cell>
               <Cell>{parseFloat((rrp / cost) * 100).toFixed(2)}%</Cell>
               <Cell>
                 $
-                {parseFloat(rrp * qty * 100).toLocaleString(undefined, {
+                {parseFloat(
+                  parseFloat(rrp) * parseInt(`${qty}`.replace(/,/g, "")) * 100
+                ).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                 })}
               </Cell>
