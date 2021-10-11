@@ -44,14 +44,14 @@ const AddRow = styled(Box, {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    borderColor: "black",
+    background: "black",
     "&::after": {
       textTransform: "uppercase",
       fontFamily: "Arktiv Grotesk",
       content: "Add a product",
-      color: "black",
+      color: "white",
     },
-    transition: ".5s ease",
-    borderColor: "black",
   },
 });
 
@@ -82,6 +82,15 @@ const RangeTemplate = (props) => {
     (e) => {
       let newPayload = [...payload];
       newPayload[index]["pricing"][priceIndex][type] = e?.target?.value;
+      console.log({ index, payload, newPayload });
+      setPayload(newPayload);
+    };
+
+  const updateText =
+    ({ index, type }) =>
+    (e) => {
+      let newPayload = [...payload];
+      newPayload[index][type] = e?.target?.value;
       setPayload(newPayload);
     };
 
@@ -98,11 +107,17 @@ const RangeTemplate = (props) => {
     setPayload([...payload, newProduct]);
   };
 
+  const deleteRow = (index) => {
+    let newPayload = payload.filter((load, i) => i !== index);
+    console.log({ index, payload, newPayload });
+    setPayload([...newPayload]);
+  };
+
   return (
     <>
       <Page
         css={{
-          padding: "1em",
+          padding: "3em",
         }}
       >
         <Text
@@ -119,7 +134,7 @@ const RangeTemplate = (props) => {
           css={{
             display: "grid",
             width: "100%",
-            gridTemplateColumns: "16.3em 1fr",
+            gridTemplateColumns: "16.7em 1fr",
           }}
         >
           <Header>Product</Header>
@@ -129,6 +144,8 @@ const RangeTemplate = (props) => {
           <ProductRow
             index={index}
             updatePrice={updatePrice}
+            updateText={updateText}
+            deleteRow={deleteRow}
             key={`${load?.title} ${index}`}
             noBorder={
               (index + 1) % (payload.length < 5 ? payload.length : 5) === 0
@@ -158,7 +175,7 @@ const RangeTemplate = (props) => {
             css={{
               display: "grid",
               width: "100%",
-              gridTemplateColumns: "15.5em 1fr",
+              gridTemplateColumns: "16.7em 1fr",
             }}
           >
             <Header>Product</Header>
@@ -168,6 +185,8 @@ const RangeTemplate = (props) => {
             <ProductRow
               index={index + 5}
               updatePrice={updatePrice}
+              updateText={updateText}
+              deleteRow={deleteRow}
               key={`${load?.title} ${index}`}
               noBorder={(index + 1) % (payload?.length - 5) === 0}
               payload={load}
@@ -252,7 +271,7 @@ const DropdownImages = () => {
   );
 };
 
-const TitleInput = styled("textarea", {
+const Textarea = styled("textarea", {
   width: "100%",
   fontFamily: "Arktiv Grotesk",
   letterSpacing: "0.9px",
@@ -264,9 +283,71 @@ const TitleInput = styled("textarea", {
   height: "fit-content",
 });
 
-const ProductRow = ({ payload, noBorder, updatePrice, index }) => {
+const PrintTextarea = styled("div", {
+  display: "none",
+  "@media print": {
+    display: "block",
+  },
+});
+const TitleInput = ({ defaultValue, updateText, index }) => {
+  const [title, setTitle] = useState();
+  useEffect(() => {
+    setTitle(defaultValue);
+  }, []);
+
   return (
-    <Row>
+    <>
+      <Textarea
+        onBlur={updateText({ index, type: "title" })}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        id="textarea"
+        name="textarea"
+        cols="40"
+        rows="2"
+      />
+      <PrintTextarea>
+        <Text>{title}</Text>
+      </PrintTextarea>
+    </>
+  );
+};
+
+const DeleteCol = styled("div", {
+  background: "transparent",
+  height: "100%",
+  width: "1em",
+  border: "1px solid transparent",
+  borderRadius: "5px",
+  margin: ".5em 0",
+  cursor: "pointer",
+  "&:hover": {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "red",
+    background: "red",
+    "&::after": {
+      fontSize: "10px",
+      textTransform: "uppercase",
+      fontFamily: "Arktiv Grotesk",
+      content: "Delete",
+      transform: "rotate(90deg)",
+      color: "white",
+    },
+  },
+});
+
+const ProductRow = ({
+  payload,
+  noBorder,
+  updatePrice,
+  deleteRow,
+  updateText,
+  index,
+}) => {
+  return (
+    <Row key={index}>
       <Box
         css={{
           display: "flex",
@@ -279,8 +360,19 @@ const ProductRow = ({ payload, noBorder, updatePrice, index }) => {
       >
         <DropdownImages />
         <Box>
-          <TitleInput cols="40" rows="2" defaultValue={payload?.title} />
-          <Input css={{ fontSize: "12px", padding: "0" }} />
+          <TitleInput
+            index={index}
+            defaultValue={payload?.title}
+            type="text"
+            cols="40"
+            rows="2"
+            updateText={updateText}
+          />
+          <Input
+            defaultValue={payload?.caption}
+            css={{ fontSize: "12px", padding: "0" }}
+            onBlur={updateText({ index, type: "caption" })}
+          />
         </Box>
       </Box>
       <Box
@@ -337,6 +429,7 @@ const ProductRow = ({ payload, noBorder, updatePrice, index }) => {
           ))}
         </Box>
       </Box>
+      <DeleteCol onClick={() => deleteRow(index)} />
     </Row>
   );
 };
