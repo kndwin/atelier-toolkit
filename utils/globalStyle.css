@@ -1,27 +1,34 @@
-#__next {	
-	width: 100%;
-	height: 100%;
+#__next {
+  width: 100%;
+  height: 100%;
 }
 
-html, body {
-	height: 100%;
-	width: 100%;
-	margin: 0;
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+  }
 }
 
 @font-face {
-	font-family: 'News Cycle';
-	src: url('./fonts/newscycle-regular.ttf');
+  font-family: "News Cycle";
+  src: url("./fonts/newscycle-regular.ttf");
 }
 @font-face {
-	font-family: 'Orelo';
-	src: url('./fonts/orelo_semiwide_regular-webfont.woff2');
+  font-family: "Orelo";
+  src: url("./fonts/orelo_semiwide_regular-webfont.woff2");
 }
 @font-face {
-	font-family: 'Arktiv Grotesk';
-	src: url('./fonts/aktivgrotesk-regular.woff2');
+  font-family: "Arktiv Grotesk";
+  src: url("./fonts/aktivgrotesk-regular.woff2");
 }

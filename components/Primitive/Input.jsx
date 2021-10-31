@@ -10,4 +10,7 @@ export const Input = styled("input", {
   "&:focus-visible": {
     outline: "none",
   },
+	"&:disabled": {
+		background: "transparent"
+	}
 });

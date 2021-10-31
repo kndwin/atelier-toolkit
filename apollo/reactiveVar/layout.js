@@ -4,4 +4,5 @@ export const layoutVar = makeVar({
   isDrawerOpen: false,
   page: "HOME",
   printRef: null,
+	disableEdit: false
 });

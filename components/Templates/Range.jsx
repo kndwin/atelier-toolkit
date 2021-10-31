@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Page } from "components/Page";
 import { useReactiveVar } from "@apollo/client";
 import { pricingVar } from "apollo/reactiveVar/pricing";
+import { layoutVar } from "apollo/reactiveVar/layout";
 
 const Header = styled(Text, {
   margin: "0",
@@ -30,8 +31,12 @@ const Cell = styled(Box, {
 });
 
 const InputCell = styled(Input, {
+	fontFamily: "News Cycle",
   width: "5em",
   padding: "0",
+	"&:disabled": {
+		background: "transparent"
+	}
 });
 
 const AddRow = styled(Box, {
@@ -59,11 +64,7 @@ const AddRow = styled(Box, {
 
 const RangeTemplate = (props) => {
   const payload = useReactiveVar(pricingVar);
-
-  useEffect(() => {
-    // console.log("useEffect");
-    // console.table(payload);
-  }, [payload]);
+	const { disableEdit } = useReactiveVar(layoutVar)
 
   const updatePrice =
     ({ index, type, priceIndex }) =>
@@ -73,18 +74,21 @@ const RangeTemplate = (props) => {
       pricingVar(newPayload);
     };
 
-  const updateTitle = ({ index, type, title}) => {
+  const updateTitle = ({ index, type, title }) => {
     let newPayload = [...payload];
     newPayload[index][type] = title;
     pricingVar(newPayload);
-  }
+  };
 
   const updateText =
     ({ index, type }) =>
     (e) => {
       let newPayload = [...payload];
-      newPayload[index][type] = e?.target?.value;
-      console.table(payload);
+      if (type === "title") {
+        newPayload[index][type] = e?.currentTarget?.textContent;
+      } else {
+        newPayload[index][type] = e?.target?.value;
+      }
       pricingVar(newPayload);
     };
 
@@ -102,14 +106,13 @@ const RangeTemplate = (props) => {
   };
 
   const deleteRow = (index) => {
-    let newPayload = payload.filter((load, i) => i !== index);
-    pricingVar([...newPayload]);
+    payload.splice(index, 1);
+    pricingVar([...payload]);
   };
 
   const updateImage = ({ index, image }) => {
     let newPayload = [...payload];
     newPayload[index].image = image;
-    // console.table(newPayload, payload);
     pricingVar(newPayload);
   };
 
@@ -155,7 +158,7 @@ const RangeTemplate = (props) => {
             payload={load}
           />
         ))}
-        {payload?.length <= 5 && <AddRow onClick={() => addProduct()} />}
+        {payload?.length <= 5 && !disableEdit && <AddRow onClick={() => addProduct()} />}
       </Page>
       {payload?.length > 5 && (
         <Page
@@ -188,7 +191,7 @@ const RangeTemplate = (props) => {
               updateImage={updateImage}
               index={index + 5}
               updatePrice={updatePrice}
-              updateTitle=
+              updateTitle={updateTitle}
               updateText={updateText}
               deleteRow={deleteRow}
               key={`${load?.title} ${index}`}
@@ -196,7 +199,7 @@ const RangeTemplate = (props) => {
               payload={load}
             />
           ))}
-          {payload?.length < 11 && <AddRow onClick={() => addProduct()} />}
+          {payload?.length < 11 && !disableEdit && <AddRow onClick={() => addProduct()} />}
         </Page>
       )}
     </>
@@ -231,7 +234,7 @@ const ImageSelected = styled(Img, {
   },
 });
 
-const DropdownImages = ({ index, updateImage }) => {
+const DropdownImages = ({ index, updateImage, defaultImage }) => {
   const images = [
     "/svg/soap-bottle.svg",
     "/svg/soap-bottle-2.svg",
@@ -242,10 +245,12 @@ const DropdownImages = ({ index, updateImage }) => {
     "/svg/toilet-bottle.svg",
   ];
 
-  const [image, setImage] = useState(images[0]);
+  const [image, setImage] = useState();
   const [showOptions, setShowOptions] = useState(false);
 
-  useEffect(() => updateImage({ index, image }), [image]);
+  useEffect(() => {
+    setImage(defaultImage);
+  }, []);
 
   return (
     <Box css={{ position: "relative" }}>
@@ -267,6 +272,7 @@ const DropdownImages = ({ index, updateImage }) => {
               onClick={() => {
                 setImage(image);
                 setShowOptions(false);
+                updateImage({ index, image });
               }}
               src={image}
             />
@@ -277,7 +283,9 @@ const DropdownImages = ({ index, updateImage }) => {
   );
 };
 
-const Textarea = styled("textarea", {
+// Using div because textarea doesn't have value = can't
+// print values
+const Textarea = styled("div", {
   width: "100%",
   fontFamily: "Arktiv Grotesk",
   letterSpacing: "0.9px",
@@ -289,33 +297,16 @@ const Textarea = styled("textarea", {
   height: "fit-content",
 });
 
-const PrintTextarea = styled("div", {
-  display: "none",
-  "@media print": {
-    display: "block",
-  },
-});
-const TitleInput = ({ defaultValue, updateText, index }) => {
-
-  const [title, setTitle] = useState();
-  useEffect(() => {
-    setTitle(defaultValue);
-  }, []);
-
+const TitleInput = ({ defaultValue, updateText, index, disableEdit }) => {
   return (
     <>
       <Textarea
-        value={title}
         onBlur={updateText({ index, type: "title" })}
-        onChange={(e) => setTitle(e.target.value)}
-        id="textarea"
-        name="textarea"
-        cols="40"
-        rows="2"
-      />
-      <PrintTextarea>
-        <Text>{title}</Text>
-      </PrintTextarea>
+        defaultValue={defaultValue}
+        contentEditable={!disableEdit}
+      >
+        {defaultValue}
+      </Textarea>
     </>
   );
 };
@@ -350,12 +341,14 @@ const ProductRow = ({
   noBorder,
   updatePrice,
   updateImage,
+  updateTitle,
   deleteRow,
   updateText,
   index,
 }) => {
+  const { disableEdit } = useReactiveVar(layoutVar);
   return (
-    <Row key={index + payload?.title}>
+    <Row key={index}>
       <Box
         css={{
           display: "flex",
@@ -366,17 +359,20 @@ const ProductRow = ({
           height: "100%",
         }}
       >
-        <DropdownImages index={index} updateImage={updateImage} />
+        <DropdownImages
+          defaultImage={payload?.image}
+          index={index}
+          updateImage={updateImage}
+        />
         <Box>
           <TitleInput
+            disableEdit={disableEdit}
             index={index}
             defaultValue={payload?.title}
-            type="text"
-            cols="40"
-            rows="2"
             updateText={updateText}
           />
           <Input
+            disabled={disableEdit}
             defaultValue={payload?.caption}
             css={{ fontSize: "12px", padding: "0" }}
             onBlur={updateText({ index, type: "caption" })}
@@ -411,14 +407,17 @@ const ProductRow = ({
           {payload.pricing.map(({ qty, cost, rrp }, priceIndex) => (
             <PricingRow key={index}>
               <InputCell
+								disabled={disableEdit}
                 onChange={updatePrice({ index, type: "qty", priceIndex })}
                 defaultValue={parseFloat(qty).toLocaleString()}
               />
               <InputCell
+								disabled={disableEdit}
                 onChange={updatePrice({ index, type: "cost", priceIndex })}
                 defaultValue={parseFloat(cost).toFixed(2)}
               />
               <InputCell
+								disabled={disableEdit}
                 onChange={updatePrice({ index, type: "rrp", priceIndex })}
                 defaultValue={parseFloat(rrp).toFixed(2)}
               />
@@ -427,17 +426,19 @@ const ProductRow = ({
               <Cell>
                 $
                 {parseFloat(
-                  parseFloat(rrp) * parseInt(`${qty}`.replace(/,/g, "")) * 100
+                  parseFloat(rrp) * parseInt(`${qty}`.replace(/,/g, ""))
                 ).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                 })}
               </Cell>
-              <Cell>{parseInt(8000 / (rrp - cost))}</Cell>
+              <Cell>{parseInt((cost * qty) / rrp)}</Cell>
             </PricingRow>
           ))}
         </Box>
       </Box>
-      <DeleteCol onClick={() => deleteRow(index)} />
+			{!disableEdit &&
+				<DeleteCol onClick={() => deleteRow(index)} />
+			}
     </Row>
   );
 };

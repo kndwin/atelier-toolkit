@@ -12,7 +12,9 @@ export const Page = styled("div", {
     padding: "0 4em",
     height: "100%",
     width: "100%",
-    size: "A4 landscape",
+		"@page" : {
+			size: "landscape",
+		},
     border: "none",
     margin: "0",
   },

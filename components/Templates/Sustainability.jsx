@@ -38,14 +38,14 @@ const SustainabilityTemplate = () => {
       <Box
         css={{
           display: "flex",
-          width: "70%",
+          width: "60%",
           height: "100%",
           margin: "0 auto",
           padding: "3em 0",
           alignItems: "center",
         }}
       >
-        <Box>
+				<Box css={{ marginRight: "3em"}}>
           <Title>Our commitment to sustainability</Title>
           <Text>
             We offer the ability to carbon offset every product that moves
@@ -58,7 +58,7 @@ const SustainabilityTemplate = () => {
             We do this by contributing to arbon extractive programs, globally.
           </Text>
         </Box>
-        <Box>
+				<Box css={{ marginLeft: "3em"}}>
           <Title>Our Pledge</Title>
           <Text>
             We will also donate 5% of our profit to each order to an

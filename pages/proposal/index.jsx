@@ -36,7 +36,7 @@ const ProposalTemplatesWrapper = styled(Box, {
   },
 });
 
-export const ProposalTemplates = ({ minimap }) => {
+export const ProposalTemplates = () => {
   return (
     <ProposalTemplatesWrapper>
       {Templates.map((component, index) => (

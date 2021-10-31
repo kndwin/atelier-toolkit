@@ -1,11 +1,14 @@
 import { customerVar } from "apollo/reactiveVar/customer";
+import { pricingVar } from "apollo/reactiveVar/pricing";
 
 export const submitProposal = async () => {
   const { customer } = customerVar();
+  const pricing = pricingVar();
   const data = {
     customer,
+    pricing,
   };
-  console.log(JSON.stringify(data));
+
   await fetch("/api/proposal", {
     method: "POST",
     headers: {

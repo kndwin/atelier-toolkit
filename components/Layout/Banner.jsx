@@ -44,6 +44,10 @@ const Banner = ({ page }) => {
       print();
     }
   };
+  const handleOpenEmail = (e) => {
+		window.location = "mailto:example@email.com";
+    e.preventDefault();
+  };
 
   return (
     <>
@@ -77,14 +81,21 @@ const Banner = ({ page }) => {
                   {error}
                 </Text>
               )}
-              <Button onClick={() => handlePrint()}>Print PDF</Button>
+              <Button onClick={(e) => handleOpenEmail(e)}>Open email</Button>
+              <Button
+                css={{
+                  marginX: "$3",
+                }}
+                onClick={() => handlePrint()}
+              >
+                Print PDF
+              </Button>
               <Link href={`/proposal/${customer}`}>
                 <Button
                   loading={fetchStatus}
                   onClick={() => submitProposalHandler()}
                   css={{
-                    marginX: "$3",
-                    marginRight: "1em",
+                    marginRight: "$3",
                   }}
                 >
                   Preview
