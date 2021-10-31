@@ -5,6 +5,7 @@ import { Page } from "components/Page";
 import { useReactiveVar } from "@apollo/client";
 import { pricingVar } from "apollo/reactiveVar/pricing";
 import { layoutVar } from "apollo/reactiveVar/layout";
+import { v4 as uuid} from 'uuid'
 
 const Header = styled(Text, {
   margin: "0",
@@ -405,7 +406,7 @@ const ProductRow = ({
             <Header>UNITS SOLD TO BREAK EVEN</Header>
           </PricingRow>
           {payload.pricing.map(({ qty, cost, rrp }, priceIndex) => (
-            <PricingRow key={index}>
+            <PricingRow key={uuid()}>
               <InputCell
 								disabled={disableEdit}
                 onChange={updatePrice({ index, type: "qty", priceIndex })}
