@@ -6,7 +6,10 @@ export const Input = styled("input", {
   width: "fit-content",
   border: "none",
   caretColor: "$dark",
-  padding: "$1",
+	backgroundColor: "$gray",
+  padding: "0.5em 1em",
+	margin: ".25em 0", 
+	borderRadius: "30px", 
   "&:focus-visible": {
     outline: "none",
   },

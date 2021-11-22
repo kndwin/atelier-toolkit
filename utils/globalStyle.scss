@@ -32,3 +32,31 @@ body {
   font-family: "Arktiv Grotesk";
   src: url("./fonts/aktivgrotesk-regular.woff2");
 }
+
+@font-face {
+  font-family: "ITC Garamond";
+  src: url("./fonts/ITCGaramondStd-LtCond.otf") format("opentype");
+	font-weight: 200; 
+}
+
+h2,
+h1 {
+	font-family: "ITC Garamond";
+	font-weight: 200; 
+	line-height: 1em; 
+	margin: 0; 
+}
+
+h1 {
+	font-size: 100px; 
+}
+
+h2 {
+	font-size: 64px; 
+}
+
+p {
+	font-family: "News Cycle";
+	font-size: 16px; 
+	margin: 0; 
+}

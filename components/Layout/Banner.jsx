@@ -1,9 +1,9 @@
+import Link from "next/link";
 import { useReactiveVar } from "@apollo/client";
 import { styled } from "@stitches/react";
 import { customerVar } from "apollo/reactiveVar/customer";
 import { layoutVar } from "apollo/reactiveVar/layout";
 import { Box, Text, Input, Button } from "components";
-import Link from "next/link";
 import { useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { submitProposal } from "utils/apis/submitProposal";
@@ -70,8 +70,8 @@ const Banner = ({ page }) => {
                 onChange={(e) =>
                   customerVar({ ...customerVar(), customer: e.target.value })
                 }
-                placeholder="Enter customer name here..."
                 type="text"
+                placeholder="Enter customer name here..."
                 css={{ background: "$offwhite", width: "17em" }}
               />
             </Box>

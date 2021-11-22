@@ -6,7 +6,7 @@ const LogoWrapper = styled("div", {
   height: "2em",
   width: "2em",
   top: "3em",
-  right: "1.25em",
+  left: "1.25em",
   transition: "all 1s ease",
   svg: {
     rect: {

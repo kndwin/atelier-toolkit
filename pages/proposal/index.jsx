@@ -4,17 +4,17 @@ import { Box } from "components";
 import Layout from "components/Layout";
 import React, { useEffect, useRef } from "react";
 import Templates from "components/Templates";
-import { useReactToPrint } from "react-to-print";
+import Form from "./Form"
 
 const Proposals = (props) => {
   const printRef = useRef();
 
   useEffect(() => {
-    layoutVar({ ...layoutVar(), isDrawerOpen: false, printRef: printRef });
+    layoutVar({ ...layoutVar(), isDrawerOpen: true, printRef: printRef });
   }, []);
 
   return (
-    <Layout>
+		<Layout sidedraw={<Form />}>
       <div ref={printRef}>
         <ProposalTemplates />
       </div>

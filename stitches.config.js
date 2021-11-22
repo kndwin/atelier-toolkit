@@ -13,25 +13,12 @@ export const {
     colors: {
       dark: "black",
       light: "white",
+			gray: "#F2F2F2",
       primary: "#0069F1",
       red: "#ec5a24",
       green: "#7BC369",
       offWhite: "rgba(255,150,15,0.05)",
       orange: "#FAAF4A",
-
-      gray100: "hsl(206,22%,99%)",
-      gray200: "hsl(206,12%,97%)",
-      gray300: "hsl(206,11%,92%)",
-      gray400: "hsl(206,10%,84%)",
-      gray500: "hsl(206,10%,76%)",
-      gray600: "hsl(206,10%,44%)",
-
-      purple100: "hsl(252,100%,99%)",
-      purple200: "hsl(252,100%,98%)",
-      purple300: "hsl(252,100%,94%)",
-      purple400: "hsl(252,75%,84%)",
-      purple500: "hsl(252,78%,60%)",
-      purple600: "hsl(252,80%,53%)",
     },
     space: {
       1: "5px",

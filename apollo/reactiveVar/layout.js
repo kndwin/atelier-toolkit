@@ -1,7 +1,7 @@
 import { makeVar } from "@apollo/client";
 
 export const layoutVar = makeVar({
-  isDrawerOpen: false,
+  isDrawerOpen: true,
   page: "HOME",
   printRef: null,
 	disableEdit: false

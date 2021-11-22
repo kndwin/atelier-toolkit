@@ -1,13 +1,12 @@
-import {layoutVar} from "apollo/reactiveVar/layout";
 import Layout from "components/Layout";
-import {useEffect} from "react";
 import Welcome from "./Welcome";
+import ProposalLink from "./ProposalLink";
 
 export default function Home() {
 
   return (
-    <Layout>
-      <Welcome />
+		<Layout isOpen={true} sidedraw={<Welcome />}>
+			<ProposalLink />
     </Layout>
   );
 }
