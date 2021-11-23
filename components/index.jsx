@@ -1,12 +1,14 @@
 // Primitive
 export { Text } from "./Primitive/Text";
-export { Box, Container } from "./Primitive/Box";
+export { Box } from "./Primitive/Box";
 export { Link } from "./Primitive/Link";
 export { Input } from "./Primitive/Input";
 export { Button } from "./Primitive/Button";
 export { Img } from "./Primitive/Img";
+export { Logo } from './Primitive/Logo'
 
 // Complex
-export { ScrollArea } from './ScrollArea'
-export { Layout } from './Layout'
-export { Logo } from './Logo'
+export { ScrollArea } from './Complex/ScrollArea'
+export { Layout } from './Complex/Layout'
+export { Dropdown } from './Complex/Dropdown'
+export { Page } from './Complex/Page'

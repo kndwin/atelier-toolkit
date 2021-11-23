@@ -8,6 +8,7 @@
   "dependencies": {
     "@apollo/client": "^3.4.15",
     "@notionhq/client": "^0.4.0",
+    "@radix-ui/react-aspect-ratio": "^0.1.1",
     "@radix-ui/react-scroll-area": "^0.1.0",
     "@stitches/react": "^1.0.0",
     "graphql": "^15.6.0",

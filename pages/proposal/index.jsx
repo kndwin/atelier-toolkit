@@ -1,16 +1,18 @@
 import { styled } from "@stitches/react";
-import { layoutVar } from "apollo/reactiveVar/layout";
-import { Box } from "components";
-import Layout from "components/Layout";
+import { Box, Layout } from "components";
 import React, { useEffect, useRef } from "react";
-import Templates from "components/Templates";
+import { ProposalTemplatesContent } from "components/Pages/proposals/Templates";
 import Form from "./Form"
+import {useDrawer, useLayout} from "hooks";
 
 const Proposals = (props) => {
   const printRef = useRef();
+	const { setDrawer } = useDrawer()
+	const { setPrintRef } = useLayout()
 
   useEffect(() => {
-    layoutVar({ ...layoutVar(), isDrawerOpen: true, printRef: printRef });
+		setDrawer(true)
+		setPrintRef(printRef)
   }, []);
 
   return (
@@ -26,7 +28,7 @@ export default Proposals;
 
 const ProposalTemplatesWrapper = styled(Box, {
   "@media print": {
-    position: "absolute",
+    osition: "absolute",
     top: "0",
     left: "0",
     background: "white",
@@ -39,7 +41,7 @@ const ProposalTemplatesWrapper = styled(Box, {
 export const ProposalTemplates = () => {
   return (
     <ProposalTemplatesWrapper>
-      {Templates.map((component, index) => (
+      {ProposalTemplatesContent.map((component, index) => (
         <div key={index}>{component}</div>
       ))}
     </ProposalTemplatesWrapper>
