@@ -1,15 +1,16 @@
-import { customerVar } from "apollo/reactiveVar/customer";
-import { layoutVar } from "apollo/reactiveVar/layout";
-import { pricingVar } from "apollo/reactiveVar/pricing";
 import { Box } from "components";
+import { useCustomer, useForm, useLayout } from "hooks";
 import { useRouter } from "next/dist/client/router";
-import { useEffect, useState } from "react";
+import { useEffect,} from "react";
 import { notion } from "utils/notion/client";
 import { ProposalTemplates } from ".";
 
 const ProposalPreview = ({ notionDatabase }) => {
   const router = useRouter();
   const { customer } = router?.query;
+  const { setCustomer } = useCustomer();
+  const { setDisableEdit } = useLayout();
+  const { setPrice } = useForm();
 
   useEffect(() => {
     const pricingArr = notionDatabase?.map(({ properties }) => {
@@ -25,12 +26,12 @@ const ProposalPreview = ({ notionDatabase }) => {
       )?.pricing
     );
 
-    pricingVar([...pricing]);
+    setPrice(pricing);
   }, [notionDatabase]);
 
   useEffect(() => {
-    customerVar({ ...customerVar(), customer: customer });
-    layoutVar({ ...layoutVar(), disableEdit: true });
+    setCustomer(customer);
+    setDisableEdit(true);
   }, []);
 
   return (

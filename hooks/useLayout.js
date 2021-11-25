@@ -11,10 +11,15 @@ export const useLayout = () => {
 	const setPrintRef = (printRef) => {
 		layoutVar({...layoutVar(), printRef });
 	}
+	const setDisableEdit = (disableEdit) => {
+		layoutVar({...layoutVar(), disableEdit });
+	}
+
 	return {
 		page,
 		printRef,
 		disableEdit,
+		setDisableEdit,
 		setPrintRef
 	};
 };
