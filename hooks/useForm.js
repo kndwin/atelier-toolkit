@@ -21,6 +21,10 @@ export const useForm = () => {
     setPricing(newPricing);
   };
 
+  const removeProduct = ({ id }) => {
+    setPricing(pricing.filter(({ id: productId }) => id != productId));
+  };
+
   const addPriceToProduct = ({ id, price }) => {
     const newPricing = [...pricing];
     const index = pricing.findIndex(({ id: priceId }) => priceId === id);
@@ -67,6 +71,7 @@ export const useForm = () => {
     error,
     setError,
     setPrice,
+		removeProduct,
     addPriceToProduct,
     removePriceFromProduct,
     updatePriceInProduct,

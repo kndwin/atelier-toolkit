@@ -54,5 +54,17 @@ export const Button = styled("button", {
         border: "1px solid $light",
       },
     },
-  },
+		theme: {
+			red: {
+				backgroundColor: "$red",
+				color: "white",
+				borderColor: "$red",
+				"&:hover": {
+					color: "$red",
+					backgroundColor: "white",
+					borderColor: "$red",
+				}
+			}
+		}
+	},
 });

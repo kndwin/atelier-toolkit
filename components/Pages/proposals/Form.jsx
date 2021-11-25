@@ -2,7 +2,6 @@ import { Box, Text, Input, Dropdown, Button } from "components";
 import { useCustomer, useForm } from "hooks";
 import { v4 } from "uuid";
 import Cross from "public/svg/cross.svg";
-import { useEffect } from "react";
 
 export const Form = (props) => {
   const { customer, setCustomer, setContactName, contactName } = useCustomer();
@@ -11,6 +10,7 @@ export const Form = (props) => {
     currency,
     setCurrency,
     setPricing,
+    removeProduct,
     addPriceToProduct,
     updatePriceInProduct,
     removePriceFromProduct,
@@ -24,7 +24,7 @@ export const Form = (props) => {
       volume: "",
       prices: [
         {
-					id: v4(),
+          id: v4(),
           cost: "",
           rrp: "",
           moq: "",
@@ -43,10 +43,6 @@ export const Form = (props) => {
     }
     setPricing(newPricing);
   };
-
-  useEffect(() => {
-    console.log({ pricing });
-  });
 
   const clientDetailsAndProductPricing = (
     <Box>
@@ -78,6 +74,7 @@ export const Form = (props) => {
           }}
         >
           <Input
+            value={pricing.length}
             onChange={(e) => setNumberOfPrices(Number(e.target.value))}
             placeholder="How many products are there?"
             css={{ width: "100%" }}
@@ -91,7 +88,8 @@ export const Form = (props) => {
               {
                 value: "USD",
                 label: "USD",
-							}, {
+              },
+              {
                 value: "AUD",
                 label: "AUD",
               },
@@ -172,12 +170,12 @@ export const Form = (props) => {
                 }}
               >
                 <Input
-									min={0}
-									type="number"
-									css={{ width: "100%" }}
-									value={moq}
-									placeholder="MOQ"
-									onChange={(e) =>
+                  min={0}
+                  type="number"
+                  css={{ width: "100%" }}
+                  value={moq}
+                  placeholder="MOQ"
+                  onChange={(e) =>
                     updatePriceInProduct({
                       id: productId,
                       priceId,
@@ -187,8 +185,8 @@ export const Form = (props) => {
                   }
                 />
                 <Input
-									min={0}
-									type="number"
+                  min={0}
+                  type="number"
                   css={{ width: "100%" }}
                   value={cost}
                   placeholder="Cost"
@@ -202,8 +200,8 @@ export const Form = (props) => {
                   }
                 />
                 <Input
-									min={0}
-									type="number"
+                  min={0}
+                  type="number"
                   css={{ width: "100%" }}
                   value={rrp}
                   placeholder="RRP"
@@ -224,22 +222,45 @@ export const Form = (props) => {
                 />
               </Box>
             ))}
-            <Button
-              onClick={() => {
-								const lastPrice = pricing[productIndex].prices.length - 1;
-                const newPrice = {
-                  ...pricing[productIndex].prices[lastPrice],
-                  id: v4(),
-                };
-                addPriceToProduct({
-                  id: productId,
-                  price: newPrice,
-                });
+            <Box
+              css={{
+                display: "grid",
+                width: "100%",
+                marginTop: "1em",
+                gridTemplateColumns: "1fr 1fr",
+                gridGap: "1em",
               }}
-              css={{ margin: "1em 0" }}
             >
-              Add more prices
-            </Button>
+              <Button
+                onClick={() => {
+                  const lastPrice = pricing[productIndex].prices.length - 1;
+                  const newPrice = {
+                    ...pricing[productIndex].prices[lastPrice],
+                    id: v4(),
+                  };
+                  addPriceToProduct({
+                    id: productId,
+                    price: newPrice,
+                  });
+                }}
+                css={{ width: "100%" }}
+              >
+                Add more prices
+              </Button>
+              <Button
+                onClick={() => removeProduct({ id: productId })}
+                theme="red"
+                css={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  position: "relative",
+                }}
+              >
+                Remove product
+              </Button>
+            </Box>
           </Box>
         )
       )}
