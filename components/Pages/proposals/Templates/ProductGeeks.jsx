@@ -2,7 +2,7 @@ import { Text, Box, Img, Page } from "components";
 
 export const ProductGeeksTemplate = (props) => {
   const payload = {
-    description: `think of us as product geeks who love beautiful design & supply chains that sings`,
+    description: `think of us as product geeks who love beautiful design & supply chains that sings.`,
     image: "/images/product-geeks.png",
   };
   return (
@@ -10,16 +10,17 @@ export const ProductGeeksTemplate = (props) => {
       <Box
         css={{
           height: "100%",
+          width: "100%",
+					padding: "5em",
           display: "flex",
           alignItems: "center",
           margin: "0 auto",
-          width: "90%",
         }}
       >
         <Text
           css={{
             fontFamily: "Orelo",
-            fontSize: "40px",
+            fontSize: "$6",
             textTransform: "uppercase",
           }}
         >

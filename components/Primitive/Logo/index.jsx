@@ -2,12 +2,13 @@ import { styled } from "stitches.config";
 
 const LogoWrapper = styled("div", {
   cursor: "pointer",
-  position: "absolute",
+  position: "fixed",
   height: "2em",
   width: "2em",
   top: "1.25em",
   left: "1.25em",
   transition: "all .5s ease",
+	zIndex: "10",
   svg: {
     rect: {
       fill: "$primary",

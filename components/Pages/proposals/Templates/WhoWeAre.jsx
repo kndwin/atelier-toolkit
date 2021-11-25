@@ -15,7 +15,7 @@ export const WhoWeAreTemplate = () => {
           margin: "auto",
           display: "flex",
           alignItems: "center",
-          width: "50em",
+          width: "70em",
           height: "100%",
           paddingLeft: "4em",
         }}
@@ -23,16 +23,18 @@ export const WhoWeAreTemplate = () => {
         <Box col css={{ width: "50%", marginRight: "1em" }}>
           <Text
             css={{
-              fontSize: "32px",
+              fontSize: "$5",
               letterSpacing: "1px",
               fontFamily: "Orelo",
+							fontWeight: "bold",
+							letterSpacing: "10px",
               textTransform: "uppercase",
               marginBottom: "1.5em",
             }}
           >
             {payload?.title}
           </Text>
-          <Text css={{ fontFamily: "Arktiv Grotesk", whiteSpace: "pre-wrap" }}>
+					<Text css={{ fontFamily: "News Cycle", whiteSpace: "pre-wrap", fontSize: "$5" }}>
             {payload?.description}
           </Text>
         </Box>

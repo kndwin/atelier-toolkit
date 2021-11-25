@@ -1,11 +1,12 @@
 import { Box, Img, Text, Page } from "components";
-import { useCustomer } from "hooks";
+import { useCustomer, useForm } from "hooks";
 
 export const NittyGrittyTemplate = (props) => {
   const { customer } = useCustomer();
+	const { currency } = useForm()
   const payload = {
     question: `The Nitty Gritty`,
-    content: `On top of unit costs there is one-off development of 1500 AUD per product\n\nThis covers all formulation, packaging and print\n\nThe intellectual property that we develop toegether is owned solely by you after you have ordered 5000 units\n\nWe like to work to a 2 year manufacturing contract. This ensures a predictable relationship for both parties and locks in pricing and product stability for you. We also guarantee our capacity to expand the line at anytime`,
+    content: `On top of unit costs there is one-off development of 1500 ${currency} per product\n\nThis covers all formulation, packaging and print\n\nThe intellectual property that we develop toegether is owned solely by you after you have ordered 5000 units\n\nWe like to work to a 2 year manufacturing contract. This ensures a predictable relationship for both parties and locks in pricing and product stability for you. We also guarantee our capacity to expand the line at anytime`,
     image: "/images/keanu.png",
   };
 

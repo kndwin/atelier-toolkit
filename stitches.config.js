@@ -33,16 +33,16 @@ export const {
       2: "10px",
       3: "15px",
       4: "20px",
-      5: "25px",
-      6: "35px",
+      5: "32px",
+      6: "64px",
     },
     fontSizes: {
       1: "12px",
-      2: "13px",
-      3: "15px",
-      4: "17px",
-      5: "19px",
-      6: "21px",
+      2: "16px",
+      3: "18px",
+      4: "24px",
+      5: "32px",
+      6: "64px",
     },
     borderRadius: {
       1: "12px",
@@ -52,15 +52,15 @@ export const {
       5: "19px",
       6: "21px",
     },
-
-    fonts: {
-      system: "system-ui",
-    },
-  },
-  utils: {
-    marginX: (value) => ({
-      marginLeft: value,
-      marginRight: value,
+		fontFamily: {
+			news: "News Cycle",
+			serif: "ITC Garamond",
+		}
+	},
+	utils: {
+		marginX: (value) => ({
+			marginLeft: value,
+			marginRight: value,
     }),
     marginY: (value) => ({
       marginTop: value,
@@ -74,6 +74,11 @@ export const {
       paddingTop: value,
       paddingBottom: value,
     }),
+		center: () => ({
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+		})
   },
   media: {
     bp1: "(min-width: 520px)",

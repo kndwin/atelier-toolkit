@@ -27,7 +27,15 @@ body {
 @font-face {
   font-family: "Orelo";
   src: url("./fonts/orelo_semiwide_regular-webfont.woff2");
+	font-weight: 400;
 }
+
+@font-face {
+  font-family: "Orelo";
+  src: url("./fonts/orelo_semiwide_bold-webfont.woff2");
+	font-weight: 700;
+}
+
 @font-face {
   font-family: "Arktiv Grotesk";
   src: url("./fonts/aktivgrotesk-regular.woff2");
@@ -39,11 +47,9 @@ body {
 	font-weight: 200; 
 }
 
-h2,
-h1 {
+h1, h2, h3, h4 {
 	font-family: "ITC Garamond";
 	font-weight: 200; 
-	line-height: 1em; 
 	margin: 0; 
 }
 
@@ -58,5 +64,6 @@ h2 {
 p {
 	font-family: "News Cycle";
 	font-size: 16px; 
+	line-height: 1.2em; 
 	margin: 0; 
 }

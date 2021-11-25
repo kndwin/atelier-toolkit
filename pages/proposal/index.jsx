@@ -1,25 +1,20 @@
 import { styled } from "@stitches/react";
-import { Box, Layout } from "components";
 import React, { useEffect, useRef } from "react";
-import { ProposalTemplatesContent } from "components/Pages/proposals/Templates";
-import Form from "./Form"
-import {useDrawer, useLayout} from "hooks";
+
+import { Box, Layout } from "components";
+import { useDrawer, useLayout } from "hooks";
+import { ProposalTemplatesContent, Form } from "components/Pages/proposals";
 
 const Proposals = (props) => {
-  const printRef = useRef();
-	const { setDrawer } = useDrawer()
-	const { setPrintRef } = useLayout()
+  const { setDrawer } = useDrawer();
 
   useEffect(() => {
-		setDrawer(true)
-		setPrintRef(printRef)
+    setDrawer(true);
   }, []);
 
   return (
-		<Layout sidedraw={<Form />}>
-      <div ref={printRef}>
-        <ProposalTemplates />
-      </div>
+    <Layout sidedraw={<Form />} printContent>
+			<ProposalTemplates />
     </Layout>
   );
 };
@@ -28,7 +23,7 @@ export default Proposals;
 
 const ProposalTemplatesWrapper = styled(Box, {
   "@media print": {
-    osition: "absolute",
+    position: "absolute",
     top: "0",
     left: "0",
     background: "white",

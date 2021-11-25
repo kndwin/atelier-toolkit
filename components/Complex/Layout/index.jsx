@@ -1,12 +1,13 @@
+import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
-import { Box, ScrollArea, Logo } from "components";
 import { styled } from "@stitches/react";
 
 import { useRouter } from "next/dist/client/router";
-import { useDrawer } from "hooks";
-import Drawer from "./Drawer";
-import { useEffect, useState } from "react";
+import { useDrawer, useLayout} from "hooks";
+import { Logo } from "components";
+
 import { Welcome } from "components/Pages/home/Welcome";
+import Drawer from "./Drawer";
 
 const Container = styled("div", {
   display: "flex",
@@ -16,10 +17,12 @@ const Container = styled("div", {
   position: "relative",
 });
 
-export const Layout = ({ children, sidedraw }) => {
+export const Layout = ({ children, sidedraw, pushContent, printContent }) => {
   const { isDrawerOpen, toggleDrawer, setDrawer } = useDrawer();
+  const { setPrintRef } = useLayout();
   const [showLogo, setShowLogo] = useState(false);
   const router = useRouter();
+  const printRef = useRef();
 
   useEffect(() => {
     if (router.pathname === "/home") {
@@ -28,6 +31,43 @@ export const Layout = ({ children, sidedraw }) => {
       setShowLogo(true);
     }
   }, [router]);
+
+	useEffect(() => {
+    setPrintRef(printRef);
+	}, [printContent])
+
+  const Main = styled("div", {
+    width: "100%",
+    opacity: "100%",
+    position: "relative",
+  });
+
+  const Content = styled("div", {
+    variants: {
+      isDrawerOpen: {
+        true: {
+          opacity: "40%",
+        },
+      },
+      pushContent: {
+        true: {
+          marginLeft: "0em",
+          transition: "all 1s ease-in-out",
+        },
+      },
+    },
+
+    compoundVariants: [
+      {
+        isDrawerOpen: true,
+        pushContent: true,
+        css: {
+          transition: "all 1s ease-in-out",
+          marginLeft: "30em",
+        },
+      },
+    ],
+  });
 
   return (
     <Container>
@@ -39,11 +79,12 @@ export const Layout = ({ children, sidedraw }) => {
       ) : (
         <Drawer isOpen={isDrawerOpen}>{sidedraw}</Drawer>
       )}
-      <Box css={{ width: "100%" }}>
-        <ScrollArea content>
-          {children}
-        </ScrollArea>
-      </Box>
+
+      <Main>
+        <Content pushContent={pushContent} isDrawerOpen={isDrawerOpen}>
+          {printContent ? <div ref={printRef}>{children}</div> : <>{children}</>}
+        </Content>
+      </Main>
 
       {showLogo && (
         <Logo reversed={isDrawerOpen} onClick={() => toggleDrawer()} />

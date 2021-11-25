@@ -75,7 +75,7 @@ export const LastPageTemplate = () => {
               position: "absolute",
               left: "-80px",
               top: "-80px",
-              transform: "scale(.6)",
+              transform: "scale(.8)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -83,15 +83,17 @@ export const LastPageTemplate = () => {
           />
           <Text
             css={{
-              fontSize: "20px",
-              fontFamily: "Arktiv Grotesk",
+              fontSize: "24px",
+              fontFamily: "News Cycle",
               transform: "rotate(15deg)",
               color: "$light",
               width: "fit-content",
               position: "absolute",
-              left: "-24px",
+              left: "-31px",
               textAlign: "center",
-              top: "-40px",
+              top: "-24px",
+							textTransform: "uppercase",
+							fontWeight: "bold"
             }}
           >
             Thank <br />
@@ -102,18 +104,16 @@ export const LastPageTemplate = () => {
               position: "absolute",
               right: "-80px",
               bottom: "-80px",
-              display: "relative",
             }}
           >
             <Box
               css={{
-                position: "absolute",
                 right: "-30px",
-                top: "-50px",
+                top: "-30px",
                 transform: "rotate(-15deg)",
                 background: "$primary",
                 height: "fit-content",
-                width: "13em",
+                width: "16em",
                 padding: "0",
                 display: "flex",
                 justifyContent: "center",
@@ -131,6 +131,7 @@ export const LastPageTemplate = () => {
                   fontSize: "$5",
                   lineHeight: "1em",
                   margin: "9px 0",
+                  padding: "10px 25px",
                 }}
               >
                 This is a
@@ -142,7 +143,10 @@ export const LastPageTemplate = () => {
             </Box>
             <HappyCloud
               style={{
-                transform: "scale(.5)",
+								position: "absolute",
+								top: "70%",
+								right: "2em", 
+                transform: "scale(.8)",
               }}
             />
           </Box>

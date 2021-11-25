@@ -6,25 +6,54 @@ const AspectRatio = AspectRatioPrimitive;
 const PageWrapper = styled("div", {
   background: "$light",
   margin: "3em auto",
+  height: "100%",
+  width: "100%",
+  zoom: "100%",
+  variants: {
+    withBorder: {
+      true: {
+        border: "1px solid $dark",
+      },
+    },
+  },
   "@media print": {
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
-    padding: "0 4em",
-    height: "100%",
-    width: "100%",
+    height: "125vh",
+    width: "125vw",
+    zoom: "80%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     "@page": {
       size: "landscape",
     },
-    border: "none",
     margin: "0",
   },
 });
 
-export const Page = ({ children }) => {
+export const Page = ({
+  children,
+  orientation = "landscape",
+  aspectRatio = 16 / 9,
+  withBorder = false,
+}) => {
+  const getRatioAspect = (aspectRatio) => {
+    if (aspectRatio === "A4") {
+      if (orientation === "landscape") {
+        return 10000 / 14142;
+      } else {
+        // orientation === "portrait"
+        return 14142 / 10000;
+      }
+    } else {
+      return aspectRatio;
+    }
+  };
+
   return (
-    <PageWrapper>
-      <AspectRatio.Root ratio={16 / 9}>{children}</AspectRatio.Root>
+    <PageWrapper withBorder={withBorder}>
+      <AspectRatio.Root ratio={getRatioAspect(aspectRatio)}>
+        {children}
+      </AspectRatio.Root>
     </PageWrapper>
   );
 };

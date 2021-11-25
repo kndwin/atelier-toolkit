@@ -61,37 +61,47 @@ export const FrontPageTemplate = () => {
             src={payload?.image}
             alt=""
           />
-          <Star
-            style={{
+          <Box
+            css={{
               position: "absolute",
               left: "-80px",
               top: "-80px",
-              transform: "scale(.6)",
+              height: "170px",
+              width: "170px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-          <Text
-            css={{
-              fontSize: "26px",
-              fontFamily: "Arktiv Grotesk",
-              transform: "rotate(15deg)",
-              color: "$light",
-              width: "fit-content",
-              position: "absolute",
-              left: "-26px",
-              top: "-38px",
-            }}
-          >
-            Hello!
-          </Text>
-						</Star>
+            <Text
+              css={{
+                fontSize: "$2",
+                fontFamily: "News Cycle",
+                fontWeight: "bold",
+                color: "$light",
+                width: "fit-content",
+                position: "absolute",
+                left: "60px",
+                top: "75px",
+                transform: "rotate(15deg)",
+                zIndex: "10",
+              }}
+            >
+              HELLO !
+            </Text>
+            <Star
+              style={{
+                transform: "scale(.6)",
+              }}
+            />
+          </Box>
           <Box
             css={{
               position: "absolute",
               right: "-80px",
               bottom: "-80px",
+              height: "100px",
+              width: "200px",
               display: "relative",
             }}
           >
@@ -103,8 +113,7 @@ export const FrontPageTemplate = () => {
                 transform: "rotate(-15deg)",
                 background: "$primary",
                 height: "fit-content",
-                width: "13em",
-                padding: "0",
+                width: "16em",
                 display: "flex",
                 justifyContent: "center",
                 borderTopLeftRadius: "60% 60%",
@@ -117,33 +126,38 @@ export const FrontPageTemplate = () => {
                 css={{
                   color: "white",
                   textAlign: "center",
-                  fontFamily: "Arktiv Grotesk",
-                  fontSize: "$5",
+                  fontFamily: "News Cycle",
+                  textTransform: "uppercase",
+                  fontSize: "$2",
+                  fontWeight: "bold",
                   lineHeight: "1em",
                   margin: "9px 0",
+                  padding: "10px 25px",
                 }}
               >
-                This is a
-                <br />
-                Proposal For
+                This is a Proposal For
                 <br />
                 {customer}
               </Text>
+              <HappyCloud
+                style={{
+                  position: "absolute",
+                  bottom: "-70px",
+                  right: "60px",
+                  transform: "scale(.75)",
+                }}
+              />
             </Box>
-            <HappyCloud
-              style={{
-                transform: "scale(.5)",
-              }}
-            />
           </Box>
         </Box>
         <Text
           css={{
             textAlign: "center",
-            marginBottom: "2em",
+            margin: "4em 0 2em 0",
             fontWeight: "bold",
             fontFamily: "News Cycle",
             size: "$6",
+						textTransform: "uppercase",
             lineHeight: "1em",
           }}
         >

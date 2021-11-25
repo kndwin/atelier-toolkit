@@ -11,20 +11,22 @@ const Title = styled(Text, {
 
 const Tombstone = styled(Box, {
   transform: "rotate(-20deg)",
-  padding: "2em 0 .5em 0",
+  padding: "2em 0 1em 0",
   position: "absolute",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  bottom: "6em",
-  right: "4em",
-  height: "10em",
+  bottom: "4em",
+  right: "6em",
+  height: "fit-content",
   width: "10em",
   borderTopLeftRadius: "50%",
   borderTopRightRadius: "50%",
   borderBottomLeftRadius: "10px",
   borderBottomRightRadius: "10px",
   background: "$orange",
+	textTransform: "uppercase",
+	fontWeight: "bold",
 });
 
 export const SustainabilityTemplate = () => {
@@ -45,7 +47,7 @@ export const SustainabilityTemplate = () => {
         }}
       >
 				<Box css={{ marginRight: "3em"}}>
-          <Title>Our commitment to sustainability</Title>
+					<Title css={{ marginBottom: "1em"}}>Our commitment to sustainability</Title>
           <Text>
             We offer the ability to carbon offset every product that moves
             through our supply chains. We will conduct a carbon impact study of
@@ -58,7 +60,7 @@ export const SustainabilityTemplate = () => {
           </Text>
         </Box>
 				<Box css={{ marginLeft: "3em"}}>
-          <Title>Our Pledge</Title>
+          <Title css={{ marginBottom: "1em" }}>Our Pledge</Title>
           <Text>
             We will also donate 5% of our profit to each order to an
             environmental project of your choice. We do this on your behalf and
@@ -73,7 +75,8 @@ export const SustainabilityTemplate = () => {
           Making <br />
           good, <br />
           By doing <br />
-          good :)
+          good <br />
+					:)
         </Text>
       </Tombstone>
     </Page>

@@ -22,10 +22,9 @@ export const ApproachTemplate = (props) => {
       >
         <Text
           css={{
-            fontFamily: "Arktiv Grotesk",
+            fontFamily: "ITC Garamond",
             fontSize: "$6",
             width: "10em",
-            marginBottom: "5em",
           }}
         >
           {payload?.question}
@@ -35,7 +34,7 @@ export const ApproachTemplate = (props) => {
             whiteSpace: "pre-wrap",
             fontFamily: "News Cycle",
             lineHeight: "1em",
-            fontSize: "$3",
+            fontSize: "$2",
             margin: "0 3em",
             width: "19em",
             letterSpacing: "0.9px",

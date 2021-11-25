@@ -1,34 +1,9 @@
-import { styled } from "@stitches/react";
 import { Box, Text, Img, Input, Page } from "components";
 import { useState, useEffect } from "react";
 import { useReactiveVar } from "@apollo/client";
 import { pricingVar } from "apollo/reactiveVar/pricing";
 import { v4 as uuid } from "uuid";
 import { useLayout } from "hooks";
-
-const Header = styled(Text, {
-  margin: "0",
-  textTransform: "uppercase",
-  fontSize: "12px",
-  fontWeight: "bold",
-});
-const Row = styled(Box, {
-  display: "flex",
-  width: "100%",
-  height: "6.5em",
-  alignItems: "center",
-});
-const PricingRow = styled(Box, {
-  display: "grid",
-  gridTemplateColumns: "repeat(7, 1fr)",
-  width: "100%",
-  height: "fit-content",
-});
-const Cell = styled(Box, {
-  fontFamily: "News Cycle",
-  height: "fit-content",
-  fontSize: "12px",
-});
 
 const InputCell = styled(Input, {
   fontFamily: "News Cycle",
