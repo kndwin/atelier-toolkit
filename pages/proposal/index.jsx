@@ -13,7 +13,7 @@ const Proposals = (props) => {
   }, []);
 
   return (
-    <Layout sidedraw={<Form />} printContent>
+    <Layout sidedraw={<Form />} printContent pushContent>
 			<ProposalTemplates />
     </Layout>
   );

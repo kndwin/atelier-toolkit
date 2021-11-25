@@ -6,7 +6,7 @@ import { useRouter } from "next/dist/client/router";
 import { useDrawer, useLayout} from "hooks";
 import { Logo } from "components";
 
-import { Welcome } from "components/Pages/home/Welcome";
+import { Welcome } from "components/Pages/home";
 import Drawer from "./Drawer";
 
 const Container = styled("div", {

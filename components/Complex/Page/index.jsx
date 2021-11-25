@@ -11,38 +11,44 @@ const PageWrapper = styled("div", {
   zoom: "100%",
   "@media print": {
     display: "flex",
-		height: "125vh",
-		width: "125vw",
-		zoom: "80%",
-		alignItems: "center",
-		justifyContent: "center",
-		margin: "0",
-		padding: "0"
+    height: "125vh",
+    width: "125vw",
+    zoom: "80%",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "0",
+    padding: "0",
+    border: "0",
+    overflow: "hidden",
+    "html,body": {
+      height: "100%",
+      overflow: "hidden",
+    },
   },
   variants: {
     withBorder: {
       true: {
         border: "1px solid $dark",
-				maxWidth: "60em",
+        maxWidth: "60em",
         "@media print": {
-					width: "100%",
-					height: "100%",
+					border: "0",
+          height: "121.5vh",
+          zoom: "80%",
         },
       },
     },
     orientation: {
       landscape: {
         "@media print": {
-					"@page": {
-						size: "landscape",
-					},
+          "@page": {
+            size: "landscape",
+          },
         },
       },
       portrait: {
         "@media print": {
           "@page": {
-						zoom: "80%",
-            size: "A4 portrait",
+            size: "portrait",
           },
         },
       },
@@ -61,11 +67,11 @@ export const Page = ({
     if (aspectRatio === "A4") {
       if (orientation === "landscape") {
         return 14142 / 10000;
-      } else if (orientation === "portrait"){
+      } else if (orientation === "portrait") {
         return 10000 / 14142;
       } else {
-				return 1; 
-			}
+        return 1;
+      }
     } else {
       return aspectRatio;
     }

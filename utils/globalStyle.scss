@@ -14,12 +14,6 @@ body {
   box-sizing: border-box;
 }
 
-@media print {
-  @page {
-    size: A4 landscape;
-  }
-}
-
 @font-face {
   font-family: "News Cycle";
   src: url("./fonts/newscycle-regular.ttf");

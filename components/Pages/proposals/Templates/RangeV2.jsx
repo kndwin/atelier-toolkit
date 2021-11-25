@@ -67,7 +67,7 @@ export const RangeTemplateV2 = (props) => {
                   <Cell>{parseFloat(moq).toLocaleString()}</Cell>
                   <Cell>${parseFloat(cost).toFixed(2)}</Cell>
                   <Cell>${parseFloat(rrp).toFixed(2)}</Cell>
-                  <Cell>{parseFloat((cost / rrp) * 100).toFixed(2)}%</Cell>
+                  <Cell>{parseFloat(((rrp - cost) / rrp) * 100).toFixed(2)}%</Cell>
                   <Cell>{parseFloat((rrp / cost) * 100).toFixed(2)}%</Cell>
                   <Cell>
                     $

@@ -82,6 +82,7 @@ export const Form = (props) => {
             min="0"
           />
           <Dropdown
+						placeholder="Select Currency"
             value={currency}
             onChange={(value) => setCurrency(value)}
             options={[
