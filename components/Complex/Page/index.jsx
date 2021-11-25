@@ -9,24 +9,44 @@ const PageWrapper = styled("div", {
   height: "100%",
   width: "100%",
   zoom: "100%",
+  "@media print": {
+    display: "flex",
+		height: "125vh",
+		width: "125vw",
+		zoom: "80%",
+		alignItems: "center",
+		justifyContent: "center",
+		margin: "0",
+		padding: "0"
+  },
   variants: {
     withBorder: {
       true: {
         border: "1px solid $dark",
+				maxWidth: "60em",
+        "@media print": {
+					width: "100%",
+					height: "100%",
+        },
       },
     },
-  },
-  "@media print": {
-    height: "125vh",
-    width: "125vw",
-    zoom: "80%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    "@page": {
-      size: "landscape",
+    orientation: {
+      landscape: {
+        "@media print": {
+					"@page": {
+						size: "landscape",
+					},
+        },
+      },
+      portrait: {
+        "@media print": {
+          "@page": {
+						zoom: "80%",
+            size: "A4 portrait",
+          },
+        },
+      },
     },
-    margin: "0",
   },
 });
 
@@ -35,22 +55,28 @@ export const Page = ({
   orientation = "landscape",
   aspectRatio = 16 / 9,
   withBorder = false,
+  restrictToPage = false,
 }) => {
   const getRatioAspect = (aspectRatio) => {
     if (aspectRatio === "A4") {
       if (orientation === "landscape") {
+        return 14142 / 10000;
+      } else if (orientation === "portrait"){
         return 10000 / 14142;
       } else {
-        // orientation === "portrait"
-        return 14142 / 10000;
-      }
+				return 1; 
+			}
     } else {
       return aspectRatio;
     }
   };
 
   return (
-    <PageWrapper withBorder={withBorder}>
+    <PageWrapper
+      withBorder={withBorder}
+      restrictToPage={restrictToPage}
+      orientation={orientation}
+    >
       <AspectRatio.Root ratio={getRatioAspect(aspectRatio)}>
         {children}
       </AspectRatio.Root>

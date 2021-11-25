@@ -277,7 +277,6 @@ export const Form = (props) => {
     <Box
       css={{
         height: "100%",
-        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",

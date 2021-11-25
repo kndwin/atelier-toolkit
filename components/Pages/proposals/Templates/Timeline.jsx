@@ -33,11 +33,11 @@ const Description = styled(Text, {
   fontSize: "$2",
 });
 
-const NeatO = styled(Box, {
+const NeatO = styled('div', {
   position: "absolute",
   bottom: "3em",
   right: "3em",
-  background: "$green",
+  backgroundColor: "$green",
   transform: "rotate(-15deg)",
   height: "fit-content",
   width: "15em",

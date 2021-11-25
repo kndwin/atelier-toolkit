@@ -13,3 +13,6 @@ export { Layout } from './Complex/Layout'
 export { Dropdown } from './Complex/Dropdown'
 export { Page } from './Complex/Page'
 export { Header, Row, PricingRow, Cell} from './Complex/Table'
+
+// PrintComponents
+export { PrintPage } from './PrintComponents/PrintPage'

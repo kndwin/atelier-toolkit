@@ -29,16 +29,15 @@ export const Dropdown = ({ options, onChange, placeholder, ...newProps }) => {
           width: "100%",
           textAlign: "left",
           background: "$gray",
-					"&::after": {
-						position: "absolute",
-						content: '▼',
-						right: "10px",
-						bottom: "11px",
-					}
+          "&::after": {
+            position: "absolute",
+            content: "▼",
+            right: "10px",
+            bottom: "11px",
+          },
         }}
-        onClick={() => console.log({ show, optionChosen, options })}
       >
-        {!!optionChosen ? optionChosen : placeholder} 
+        {!!optionChosen ? optionChosen : placeholder}
       </Button>
       <Box
         css={{
@@ -49,10 +48,10 @@ export const Dropdown = ({ options, onChange, placeholder, ...newProps }) => {
           position: "absolute",
           top: "100%",
           left: "0",
-					border: "1px solid black",
-					borderRadius: "10px",
-					overflow: "hidden",
-					background: "white"
+          border: "1px solid black",
+          borderRadius: "10px",
+          overflow: "hidden",
+          background: "white",
         }}
         ref={nodeRef}
       >
@@ -61,14 +60,14 @@ export const Dropdown = ({ options, onChange, placeholder, ...newProps }) => {
             css={{
               height: "fit-content",
               width: "100%",
-							fontFamily: "News Cycle",
-							fontWeight: "bold",
-							lineHeight: "1em",
-							padding: "10px",
-							"&:hover": {
-								background: "$primary",
-								color: "white"
-							}
+              fontFamily: "News Cycle",
+              fontWeight: "bold",
+              lineHeight: "1em",
+              padding: "10px",
+              "&:hover": {
+                background: "$primary",
+                color: "white",
+              },
             }}
             value={value}
             key={`${value}-${index}`}

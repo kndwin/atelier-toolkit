@@ -10,6 +10,7 @@
     "@notionhq/client": "^0.4.0",
     "@radix-ui/react-aspect-ratio": "^0.1.1",
     "@radix-ui/react-scroll-area": "^0.1.0",
+    "@react-pdf/renderer": "^2.0.21",
     "@stitches/react": "^1.0.0",
     "graphql": "^15.6.0",
     "next": "latest",
