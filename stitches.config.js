@@ -58,19 +58,19 @@ export const {
 		}
 	},
 	utils: {
-		marginX: (value) => ({
+		mx: (value) => ({
 			marginLeft: value,
 			marginRight: value,
     }),
-    marginY: (value) => ({
+    my: (value) => ({
       marginTop: value,
       marginBottom: value,
     }),
-    paddingX: (value) => ({
+    px: (value) => ({
       paddingLeft: value,
       paddingRight: value,
     }),
-    paddingY: (value) => ({
+    py: (value) => ({
       paddingTop: value,
       paddingBottom: value,
     }),

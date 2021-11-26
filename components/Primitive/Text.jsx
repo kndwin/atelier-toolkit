@@ -15,3 +15,15 @@ export const Text = styled("p", {
     },
   },
 });
+
+export const Span = styled("span", {
+	color: "$dark",
+	variants: {
+		bold: {
+			true: {
+				fontWeight: "bold",
+			},
+		},
+	},
+});
+	

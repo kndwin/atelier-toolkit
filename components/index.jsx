@@ -1,5 +1,5 @@
 // Primitive
-export { Text } from "./Primitive/Text";
+export { Text, Span } from "./Primitive/Text";
 export { Box } from "./Primitive/Box";
 export { Link } from "./Primitive/Link";
 export { Input } from "./Primitive/Input";
