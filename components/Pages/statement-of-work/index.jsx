@@ -98,7 +98,7 @@ const Initials = (
   </Box>
 );
 const Description = (props) => {
-  const { SOWPriceAndRange, SOWOrderQuantity } = useForm();
+  const { SOWPriceAndRange, SOWOrderQuantity, currency } = useForm();
   const { customer } = useCustomer();
   const maxProductsReached = SOWPriceAndRange.length >= MAX_PRODUCTS;
 
@@ -130,7 +130,7 @@ const Description = (props) => {
           <br />
           <br />
           This statement of work represents the specification, terms and
-          estimates of cost, time and product componentry for the design,
+          estimates of cost <Span> ({currency})</Span>, time and product componentry for the design,
           development and establishment of supply chains for{" "}
           {SOWPriceAndRange?.length} product for
           <Span> {customer}</Span>
@@ -444,7 +444,6 @@ const SignedAgreement = (props) => {
           <Text bold css={{ textTransform: "uppercase" }}>
             EXECUTED BY {customer}
           </Text>
-          <Text bold>ABN 51 627 664 162</Text>
           <Text>in accordance with section 127 of the Corporations Act</Text>
           <Text
             css={{

@@ -27,6 +27,9 @@ export const Dropdown = ({ options, onChange, placeholder, ...newProps }) => {
         css={{
           border: "none",
           width: "100%",
+					height: "3em", 
+					borderRadius: "9999px",
+					padding: "0 1em", 
           textAlign: "left",
           background: "$gray",
           "&::after": {

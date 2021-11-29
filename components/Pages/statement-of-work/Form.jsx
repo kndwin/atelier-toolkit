@@ -1,4 +1,4 @@
-import { Button, Box, Text, Input, TextArea } from "components";
+import { Button, Box, Text, Input, TextArea, Dropdown } from "components";
 import { useCustomer, useForm } from "hooks";
 import Cross from "public/svg/cross.svg";
 import { v4 } from "uuid";
@@ -9,6 +9,8 @@ export const Form = (props) => {
     setSOWPriceAndRange,
     SOWPriceAndRange,
     address,
+		setCurrency,
+		currency,
     setAddress,
     SOWDevelopmentFee,
     setSOWDevelopmentFee,
@@ -137,6 +139,36 @@ export const Form = (props) => {
       />
     </Box>
   );
+
+	const selectCurrency = (
+		<Box>
+      <Text css={{ fontWeight: "bold" }}>CURRENCY</Text>
+			<Dropdown
+				placeholder="Select Currency"
+				value={currency}
+				onChange={(value) => setCurrency(value)}
+				options={[
+					{
+						value: "USD",
+							label: "USD",
+					},
+					{
+						value: "AUD",
+						label: "AUD",
+					},
+				]}
+			/>
+
+		</Box>
+	)
+
+	const SOWDetails = (
+		<Box css={{ display: "grid", grid: "1fr 1fr / 1fr 1fr", gridGap: "1em"}}>
+			{orderQuantity}
+			{developmentFee}
+			{selectCurrency}
+		</Box>
+	)
   return (
     <Box
       css={{
@@ -149,8 +181,7 @@ export const Form = (props) => {
     >
       <Text as="h2">Statement of Work</Text>
       {party}
-			{orderQuantity}
-			{developmentFee}
+			{SOWDetails}
       {pricingAndRange}
     </Box>
   );
