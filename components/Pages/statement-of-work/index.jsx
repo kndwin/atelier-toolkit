@@ -1,5 +1,7 @@
 import { Page, Box, Text } from "components";
-import { useCustomer } from "hooks";
+import { useCustomer, useForm } from "hooks";
+
+const MAX_PRODUCTS = 12;
 
 export const StatementOfWorkTemplates = (props) => {
   return (
@@ -13,6 +15,9 @@ export const StatementOfWorkTemplates = (props) => {
 };
 
 const FrontPage = (props) => {
+  const { address } = useForm();
+  const { customer } = useCustomer();
+  console.log({ address });
   return (
     <Page orientation="portrait" aspectRatio="A4" withBorder>
       <Box
@@ -55,7 +60,11 @@ const FrontPage = (props) => {
           >
             PARTIES
           </Text>
-          <Text css={{ gridColumnStart: "1" }}>Parties</Text>
+          <Text css={{ gridColumnStart: "1", whiteSpace: "pre-wrap" }}>
+            {customer}
+            <br />
+            {address}
+          </Text>
           <Text>
             E XD PTY LTD <br />
             95 Riley St <br />
@@ -90,6 +99,9 @@ const Initials = (
   </Box>
 );
 const Description = (props) => {
+  const { SOWPriceAndRange } = useForm();
+  const maxProductsReached = SOWPriceAndRange.length >= MAX_PRODUCTS;
+  console.log({ maxProductsReached, SOWPriceAndRange });
   return (
     <Page orientation="portrait" aspectRatio="A4" withBorder>
       {Initials}
@@ -97,7 +109,9 @@ const Description = (props) => {
         css={{
           padding: "5em",
           display: "grid",
-          grid: "2fr 1fr auto 2fr 1fr/ 1fr 1fr 1fr",
+          grid: `2fr 1fr auto 2fr ${
+            maxProductsReached ? "" : "1fr"
+          }/ 1fr 1fr 1fr`,
           gridGap: "2em",
           justifyContent: "space-between",
           height: "100%",
@@ -121,8 +135,20 @@ const Description = (props) => {
           CLIENT NAME.
         </Text>
         <Text bold>PRODUCTS</Text>
-        <Text>PH COlour changing lip oil</Text>
-        <Text>$5.80 - $6.20</Text>
+        <Box css={{ gridColumn: "span 2" }}>
+          {SOWPriceAndRange?.map(({ price, range }) => (
+            <Box
+              css={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gridGap: "1em",
+              }}
+            >
+              <Text>{price}</Text>
+              <Text>{range}</Text>
+            </Box>
+          ))}
+        </Box>
         <Text bold>DEVELOPMENT PROCESS</Text>
         <Box
           css={{
@@ -215,19 +241,26 @@ const Description = (props) => {
             Shipping Carton
           </Text>
         </Box>
-        <Text bold>ORDER QUANTITY</Text>
-        <Box>
-          <Text bold css={{ marginBottom: "1em" }}>
-            ORDER QUANTITY
-          </Text>
-          <Text>1000</Text>
-        </Box>
+        {!maxProductsReached && (
+          <>
+            <Text bold>ORDER QUANTITY</Text>
+            <Box>
+              <Text bold css={{ marginBottom: "1em" }}>
+                ORDER QUANTITY
+              </Text>
+              <Text>1000</Text>
+            </Box>
+          </>
+        )}
       </Box>
     </Page>
   );
 };
 
 const Invoice = (props) => {
+  const { SOWPriceAndRange } = useForm();
+  const maxProductsReached = SOWPriceAndRange.length >= MAX_PRODUCTS;
+
   return (
     <Page orientation="portrait" aspectRatio="A4" withBorder>
       <Box
@@ -244,11 +277,22 @@ const Invoice = (props) => {
         <Box
           css={{
             display: "grid",
-            grid: "1fr 1fr / 17em 1fr",
+            grid: `${maxProductsReached ? "3em" : ""} 1fr 1fr / 17em 1fr`,
             height: "100%",
             gridRowGap: "2em",
           }}
         >
+          {maxProductsReached && (
+            <>
+              <Text bold>ORDER QUANTITY</Text>
+              <Box>
+                <Text bold css={{ marginBottom: "1em" }}>
+                  ORDER QUANTITY
+                </Text>
+                <Text>1000</Text>
+              </Box>
+            </>
+          )}
           <Text bold>INVOICE STAGES</Text>
           <Box
             css={{

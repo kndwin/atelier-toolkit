@@ -38,38 +38,56 @@ const DrawerContent = styled(Box, {
 const Drawer = ({ isOpen, children }) => {
   const { setDrawer } = useDrawer();
   const { customer } = useCustomer();
-  const { error, setError } = useForm();
+  const { error, setError, doubleChecked, setDoubleChecked } = useForm();
   const { printRef } = useLayout();
   const print = useReactToPrint({
     content: () => printRef.current,
   });
 
   const handlePrint = () => {
-    if (customer.length == 0) {
-      setError("Please enter a customer name");
-    } else {
-      print();
-    }
+		if (doubleChecked) {
+			print();
+			setDoubleChecked(false)
+		} else {
+			setDoubleChecked(true)
+		}
   };
   const bottomButtons = (
     <Box
       css={{
         display: "flex",
-				justifyContent: error ? "space-between" : "flex-end",
+				justifyContent: doubleChecked ? "space-between" : "flex-end",
 				alignItems: "center",
         width: "100%",
         padding: "1em 2em",
       }}
 		>
-			{error && (
+			{doubleChecked && (
 				<Text
+					as="h3"
 					css={{
-						color: "$red",
-						fontWeight: "bold",
-						textTransform: "uppercase",
+						position: "relative",
+						fontSize: "$5"
 					}}
 				>
-					{error}
+					Measure twice,
+					<br />
+					cut once!
+					<Text css={{
+						position: "absolute",
+						right: "-110%",
+						top: "0",
+						borderRadius: "50%",
+						background: "$primary",
+						color: "$light",
+						padding: "1em",
+						height: "fit-content",
+						width: "13em",
+						textAlign: "center",
+						transform: "rotate(-15deg)"
+					}}>
+						In other words, check your work before you export!
+					</Text>
 				</Text>
 			)}
 			<Button

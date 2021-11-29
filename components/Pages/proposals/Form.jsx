@@ -5,44 +5,7 @@ import Cross from "public/svg/cross.svg";
 
 export const Form = (props) => {
   const { customer, setCustomer, setContactName, contactName } = useCustomer();
-  const {
-    pricing,
-    currency,
-    setCurrency,
-    setPricing,
-    removeProduct,
-    addPriceToProduct,
-    updatePriceInProduct,
-    removePriceFromProduct,
-  } = useForm();
-
-  const setNumberOfPrices = (arrayLength) => {
-    const defaultPrice = {
-      id: v4(),
-      name: "",
-      description: "",
-      volume: "",
-      prices: [
-        {
-          id: v4(),
-          cost: "",
-          rrp: "",
-          moq: "",
-        },
-      ],
-    };
-    let newPricing;
-    let currPricing = pricing;
-    if (pricing?.length == 0) {
-      newPricing = new Array(arrayLength).fill(defaultPrice);
-    } else if (pricing.length < arrayLength) {
-      const diff = arrayLength - pricing.length;
-      newPricing = currPricing.concat(new Array(diff).fill(defaultPrice));
-    } else {
-      newPricing = currPricing.slice(0, arrayLength);
-    }
-    setPricing(newPricing);
-  };
+  const { pricing, currency, setCurrency, setNumberOfPrices } = useForm();
 
   const clientDetailsAndProductPricing = (
     <Box>
@@ -82,7 +45,7 @@ export const Form = (props) => {
             min="0"
           />
           <Dropdown
-						placeholder="Select Currency"
+            placeholder="Select Currency"
             value={currency}
             onChange={(value) => setCurrency(value)}
             options={[
@@ -101,13 +64,42 @@ export const Form = (props) => {
     </Box>
   );
 
+  return (
+    <Box
+      css={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "2em",
+      }}
+    >
+      <Box>
+        {clientDetailsAndProductPricing}
+        <ProductPricingDetail />
+      </Box>
+    </Box>
+  );
+};
+
+export const ProductPricingDetail = (props) => {
+  const {
+    pricing,
+		setPricing,
+    removeProduct,
+    addPriceToProduct,
+    updatePriceInProduct,
+    removePriceFromProduct,
+		setNumberOfPrices,
+	} = useForm();
+
   const handleUpdateProduct = ({ index, type, payload }) => {
     const newPricing = [...pricing];
     newPricing[index][type] = payload;
     setPricing(newPricing);
   };
 
-  const pricingDetails = (
+  return (
     <Box css={{ marginTop: "1em" }}>
       <Text css={{ fontWeight: "bold" }}>PRODUCTS </Text>
       {pricing?.map(
@@ -271,23 +263,6 @@ export const Form = (props) => {
       >
         Add more products
       </Button>
-    </Box>
-  );
-
-  return (
-    <Box
-      css={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        padding: "2em",
-      }}
-    >
-      <Box>
-        {clientDetailsAndProductPricing}
-        {pricingDetails}
-      </Box>
     </Box>
   );
 };

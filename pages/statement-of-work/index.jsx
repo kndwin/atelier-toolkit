@@ -7,6 +7,7 @@ import {
 const StatementOfWork = (props) => {
   return (
     <Layout
+			isOpen={true}
       sidedraw={<Form />}
       pushContent
       printContent

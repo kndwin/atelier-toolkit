@@ -1,13 +1,21 @@
 import { makeVar, useReactiveVar } from "@apollo/client";
+import { v4 } from "uuid";
 
 const formVar = makeVar({
   pricing: [],
   currency: "AUD",
   error: "",
+  address: "",
+  SOWPriceAndRange: [],
+  doubleChecked: false,
 });
 
 export const useForm = () => {
-  const { pricing, currency, error } = useReactiveVar(formVar);
+  const { pricing, currency, error, address, SOWPriceAndRange, doubleChecked } =
+    useReactiveVar(formVar);
+  const setAddress = (address) => {
+    formVar({ ...formVar(), address });
+  };
   const setCurrency = (currency) => {
     formVar({ ...formVar(), currency });
   };
@@ -59,8 +67,43 @@ export const useForm = () => {
     setPricing(newPricing);
   };
 
+  const setNumberOfPrices = (arrayLength) => {
+    const defaultPrice = {
+      id: v4(),
+      name: "",
+      description: "",
+      volume: "",
+      prices: [
+        {
+          id: v4(),
+          cost: "",
+          rrp: "",
+          moq: "",
+        },
+      ],
+    };
+    let newPricing;
+    let currPricing = pricing;
+    if (pricing?.length == 0) {
+      newPricing = new Array(arrayLength).fill(defaultPrice);
+    } else if (pricing.length < arrayLength) {
+      const diff = arrayLength - pricing.length;
+      newPricing = currPricing.concat(new Array(diff).fill(defaultPrice));
+    } else {
+      newPricing = currPricing.slice(0, arrayLength);
+    }
+    setPricing(newPricing);
+  };
+
+  const setSOWPriceAndRange = (SOWPriceAndRange) => {
+    formVar({ ...formVar(), SOWPriceAndRange });
+  };
   const setError = (error) => {
     formVar({ ...formVar(), error });
+  };
+
+  const setDoubleChecked = (doubleChecked) => {
+    formVar({ ...formVar(), doubleChecked });
   };
 
   return {
@@ -70,10 +113,17 @@ export const useForm = () => {
     setCurrency,
     error,
     setError,
+    address,
+    setAddress,
     setPrice,
-		removeProduct,
+    setNumberOfPrices,
+    removeProduct,
     addPriceToProduct,
     removePriceFromProduct,
     updatePriceInProduct,
+    doubleChecked,
+    setDoubleChecked,
+    SOWPriceAndRange,
+    setSOWPriceAndRange,
   };
 };
