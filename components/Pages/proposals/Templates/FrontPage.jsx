@@ -7,7 +7,7 @@ import HappyCloud from "public/svg/happy-cloud.svg";
 export const FrontPageTemplate = () => {
   const { customer } = useCustomer();
   const payload = {
-    description: `This document is a proposal, prepared witha sense of wonder and an analytical mind, the purpose is to illustrate the way atelier can develop a range of beatiful products coneptuslised with scientific rigor for ${customer}`,
+    description: `This document is a proposal, prepared with a sense of wonder and an analytical mind, the purpose is to illustrate the way atelier can develop a range of beatiful products conceptualise with scientific rigor for ${customer}`,
     image: `/images/intro-1.png`,
   };
 

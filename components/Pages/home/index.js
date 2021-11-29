@@ -57,12 +57,14 @@ export const Welcome = (props) => {
         borderRight: "1px solid black",
       }}
     >
-      <Text as="h1" css={{ margin: "0" }}>
+			<Text as="h1" css={{ margin: "0", lineHeight: ".8em" }}>
         WELCOME TO THE ATELIER ADMIN CENTRE.
-        <br /> <br />
+      </Text>
+			<Text as="h1" css={{ margin: "100px 0 0 0", lineHeight: ".8em" }}>
         LET'S GET DOWN TO BIZNIZ!
       </Text>
-      <Text>PICK A TEMPLATE TO START.</Text>
+
+			<Text css={{ marginTop: "100px"}}>PICK A TEMPLATE TO START.</Text>
     </Box>
   );
 };

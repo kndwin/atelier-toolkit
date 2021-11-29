@@ -24,7 +24,7 @@ const ScrollAreaViewport = styled(ScrollAreaPrimitive.Viewport, {
 const ScrollAreaThumb = styled(ScrollAreaPrimitive.Thumb, {
   flex: 1,
   borderRadius: SCROLLBAR_WIDTH,
-  background: "$primary",
+  background: "$gray",
   position: "relative",
   "&::before": {
     content: '""',

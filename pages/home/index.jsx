@@ -3,7 +3,7 @@ import { Welcome, ProposalLink } from "components/Pages/home";
 
 export default function Home() {
   return (
-    <Layout isOpen={true} sidedraw={<Welcome />}>
+    <Layout sidedraw={<Welcome />} pushContent printContent>
       <ProposalLink />
     </Layout>
   );

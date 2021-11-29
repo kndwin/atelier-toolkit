@@ -4,7 +4,7 @@ import {
   Form,
 } from "components/Pages/statement-of-work";
 
-const StatementOfWork = (props) => {
+export default function StatementOfWork (props){
   return (
     <Layout
 			isOpen={true}
@@ -17,5 +17,3 @@ const StatementOfWork = (props) => {
     </Layout>
   );
 };
-
-export default StatementOfWork;

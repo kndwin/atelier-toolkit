@@ -1,7 +1,7 @@
 import { makeVar, useReactiveVar } from "@apollo/client";
 
 const drawerVar = makeVar({
-  isDrawerOpen: true,
+  isDrawerOpen: false,
 });
 
 export const useDrawer = () => {

@@ -15,6 +15,8 @@ export const Button = styled("button", {
   paddingX: "$2",
   paddingY: "$1",
   height: "2em",
+	fontFamily: "News Cycle",
+	textTransform: "uppercase",
   "&:hover": {
     color: "$light",
     background: "$primary",

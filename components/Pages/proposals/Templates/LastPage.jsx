@@ -16,7 +16,7 @@ const GreenStar = styled(Star, {
 export const LastPageTemplate = () => {
   const { customer } = useCustomer();
   const payload = {
-    description: `This document is a proposal, prepared witha sense of wonder and an analytical mind, the purpose is to illustrate the way atelier can develop a range of beatiful products coneptuslised with scientific rigor for ${customer}`,
+    description: `This document is a proposal, prepared witha sense of wonder and an analytical mind, the purpose is to illustrate the way atelier can develop a range of beatiful products conceptualise with scientific rigor for ${customer}`,
     image: `/images/intro-1.png`,
   };
 
@@ -87,11 +87,10 @@ export const LastPageTemplate = () => {
               fontFamily: "News Cycle",
               transform: "rotate(15deg)",
               color: "$light",
-              width: "fit-content",
               position: "absolute",
-              left: "-31px",
               textAlign: "center",
-              top: "-24px",
+              left: "-7%",
+              top: "-7%",
 							textTransform: "uppercase",
 							fontWeight: "bold"
             }}
@@ -124,20 +123,22 @@ export const LastPageTemplate = () => {
               }}
             >
               <Text
-                css={{
-                  color: "white",
-                  textAlign: "center",
-                  fontFamily: "Arktiv Grotesk",
-                  fontSize: "$5",
-                  lineHeight: "1em",
-                  margin: "9px 0",
-                  padding: "10px 25px",
-                }}
-              >
-                This is a
-                <br />
-                Proposal For
-                <br />
+								css={{
+									color: "white",
+									textAlign: "center",
+									fontFamily: "News Cycle",
+									textTransform: "uppercase",
+									fontSize: "$2",
+									fontWeight: "bold",
+									lineHeight: "1em",
+									margin: "9px 0",
+									padding: "10px 25px",
+								}}
+							>
+								This is a
+								<br />
+								Proposal For
+								<br />
                 {customer}
               </Text>
             </Box>

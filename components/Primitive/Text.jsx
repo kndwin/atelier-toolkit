@@ -2,6 +2,7 @@ import { styled } from "stitches.config";
 
 export const Text = styled("p", {
   color: "$dark",
+	letterSpacing: "1px", 
   variants: {
     color: {
       error: {

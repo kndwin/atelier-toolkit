@@ -3,10 +3,10 @@ import { useCustomer, useForm } from "hooks";
 
 export const NittyGrittyTemplate = (props) => {
   const { customer } = useCustomer();
-	const { currency } = useForm()
+  const { currency } = useForm();
   const payload = {
-    question: `The Nitty Gritty`,
-    content: `On top of unit costs there is one-off development of 1500 ${currency} per product\n\nThis covers all formulation, packaging and print\n\nThe intellectual property that we develop toegether is owned solely by you after you have ordered 5000 units\n\nWe like to work to a 2 year manufacturing contract. This ensures a predictable relationship for both parties and locks in pricing and product stability for you. We also guarantee our capacity to expand the line at anytime`,
+    question: `The Nitty\n Gritty`,
+    content: `On top of unit costs there is one-off development of 1500 ${currency} per product\n\nThis covers all formulation, packaging and print\n\nThe intellectual property that we develop together is owned solely by you after you have ordered 5000 units\n\nWe like to work to a 2 year manufacturing contract. This ensures a predictable relationship for both parties and locks in pricing and product stability for you. We also guarantee our capacity to expand the line at anytime`,
     image: "/images/keanu.png",
   };
 
@@ -22,29 +22,34 @@ export const NittyGrittyTemplate = (props) => {
           margin: "0 auto",
         }}
       >
-        <Text
-          css={{
-            fontFamily: "Arktiv Grotesk",
-            fontSize: "2em",
-            width: "10em",
-            marginBottom: "5em",
-          }}
-        >
-          {payload?.question}
-        </Text>
-        <Text
-          css={{
-            whiteSpace: "pre-wrap",
-            fontFamily: "News Cycle",
-            lineHeight: "1em",
-            fontSize: "$3",
-            margin: "0 3em",
-            width: "25em",
-            letterSpacing: "0.9px",
-          }}
-        >
-          {payload?.content}
-        </Text>
+				<Box css={{ display: "flex"}}>
+          <Text
+            css={{
+              fontFamily: "ITC Garamond",
+              whiteSpace: "pre-line",
+              textAlign: "left",
+              fontSize: "$6",
+              width: "10em",
+              marginTop: "100px",
+            }}
+          >
+            {payload?.question}
+          </Text>
+          <Text
+            css={{
+              whiteSpace: "pre-wrap",
+              fontFamily: "News Cycle",
+              lineHeight: "1em",
+              fontSize: "$3",
+              margin: "0 3em",
+              width: "100%",
+              letterSpacing: "0.9px",
+              marginTop: "100px",
+            }}
+          >
+            {payload?.content}
+          </Text>
+        </Box>
         <Img css={{ height: "80%" }} src={payload?.image} />
       </Box>
     </Page>

@@ -19,24 +19,28 @@ export const Dropdown = ({ options, onChange, placeholder, ...newProps }) => {
       css={{
         position: "relative",
         width: "100%",
+				height: "fit-content"
       }}
     >
       <Button
         type="button"
         ref={triggerRef}
         css={{
+					position: "relative",
           border: "none",
           width: "100%",
 					height: "3em", 
 					borderRadius: "9999px",
 					padding: "0 1em", 
           textAlign: "left",
+					padding: "0 1.5em", 
           background: "$gray",
+					fontFamily: "News Cycle",
           "&::after": {
             position: "absolute",
             content: "▼",
-            right: "10px",
-            bottom: "11px",
+            right: "15px",
+            bottom: "10px",
           },
         }}
       >

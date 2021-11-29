@@ -3,7 +3,7 @@ import Head from "next/head";
 import { styled } from "@stitches/react";
 
 import { useRouter } from "next/dist/client/router";
-import { useDrawer, useLayout} from "hooks";
+import { useDrawer, useLayout } from "hooks";
 import { Logo } from "components";
 
 import { Welcome } from "components/Pages/home";
@@ -24,17 +24,24 @@ export const Layout = ({ children, sidedraw, pushContent, printContent }) => {
   const router = useRouter();
   const printRef = useRef();
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     if (router.pathname === "/home") {
       setDrawer(false);
     } else {
+      setDrawer(true);
       setShowLogo(true);
     }
   }, [router]);
 
-	useEffect(() => {
+  useEffect(() => {
     setPrintRef(printRef);
-	}, [printContent])
+  }, [printContent]);
 
   const Main = styled("div", {
     width: "100%",
@@ -74,15 +81,16 @@ export const Layout = ({ children, sidedraw, pushContent, printContent }) => {
       <Head>
         <title>Atelier toolkit</title>
       </Head>
-      {router.pathname == "/home" ? (
-        <Welcome />
-      ) : (
-        <Drawer isOpen={isDrawerOpen}>{sidedraw}</Drawer>
-      )}
+      {router.pathname == "/home" && <Welcome />}
+      {mounted && <Drawer isOpen={isDrawerOpen}>{sidedraw}</Drawer>}
 
       <Main>
         <Content pushContent={pushContent} isDrawerOpen={isDrawerOpen}>
-          {printContent ? <div ref={printRef}>{children}</div> : <>{children}</>}
+          {printContent ? (
+            <div ref={printRef}>{children}</div>
+          ) : (
+            <>{children}</>
+          )}
         </Content>
       </Main>
 

@@ -3,6 +3,7 @@ import { styled } from "@stitches/react";
 import { useDrawer, useCustomer, useForm, useLayout } from "hooks";
 import { useReactToPrint } from "react-to-print";
 import Cross from "public/svg/cross.svg";
+import {useRouter} from "next/dist/client/router";
 
 const DrawerWrapper = styled(Box, {
   zIndex: "9999",
@@ -37,63 +38,62 @@ const DrawerContent = styled(Box, {
 
 const Drawer = ({ isOpen, children }) => {
   const { setDrawer } = useDrawer();
-  const { customer } = useCustomer();
-  const { error, setError, doubleChecked, setDoubleChecked } = useForm();
+  const { doubleChecked, setDoubleChecked } = useForm();
   const { printRef } = useLayout();
+	const router = useRouter()
   const print = useReactToPrint({
     content: () => printRef.current,
   });
 
   const handlePrint = () => {
-		if (doubleChecked) {
-			print();
-			setDoubleChecked(false)
-		} else {
-			setDoubleChecked(true)
-		}
+    if (doubleChecked) {
+      print();
+      setDoubleChecked(false);
+    } else {
+      setDoubleChecked(true);
+    }
   };
   const bottomButtons = (
     <Box
       css={{
         display: "flex",
-				justifyContent: doubleChecked ? "space-between" : "flex-end",
-				alignItems: "center",
+        justifyContent: doubleChecked ? "space-between" : "flex-end",
+        alignItems: "flex-end",
         width: "100%",
         padding: "1em 2em",
       }}
-		>
-			{doubleChecked && (
-				<Text
-					as="h3"
-					css={{
-						position: "relative",
-						fontSize: "$5"
-					}}
-				>
-					Measure twice,
-					<br />
-					cut once!
-					<Text css={{
-						position: "absolute",
-						right: "-110%",
-						top: "0",
-						borderRadius: "50%",
-						background: "$primary",
-						color: "$light",
-						padding: "1em",
-						height: "fit-content",
-						width: "13em",
-						textAlign: "center",
-						transform: "rotate(-15deg)"
-					}}>
-						In other words, check your work before you export!
-					</Text>
-				</Text>
-			)}
-			<Button
-				css={{ width: "fit-content" }}
-				onClick={() => handlePrint()}
-			>
+    >
+      {doubleChecked && (
+        <Text
+          as="h3"
+          css={{
+            position: "relative",
+            fontSize: "$5",
+          }}
+        >
+          Measure twice,
+          <br />
+          cut once!
+          <Text
+            css={{
+              position: "absolute",
+              right: "-110%",
+              top: "0",
+              borderRadius: "50%",
+              background: "$primary",
+              color: "$light",
+              padding: "1em",
+              height: "fit-content",
+              width: "13em",
+              textAlign: "center",
+              transform: "rotate(-15deg)",
+            }}
+          >
+            In other words, check your work before you export!
+          </Text>
+        </Text>
+      )}
+      <Button css={{ width: "10em" }} onClick={() => handlePrint()}>
         Export PDF
       </Button>
     </Box>
@@ -102,6 +102,22 @@ const Drawer = ({ isOpen, children }) => {
     <DrawerWrapper isOpen={isOpen}>
       <ScrollArea>
         <DrawerContent>
+          <Button
+            onClick={() => router.replace("/home")}
+            css={{
+              position: "absolute",
+              top: "2em",
+              left: "2em",
+              width: "10em",
+              zIndex: "9999999",
+              cursor: "pointer",
+              "&:hover": {
+                background: "$primary",
+              },
+            }}
+          >
+            Back to home
+          </Button>
           <Box
             onClick={() => setDrawer(false)}
             css={{
@@ -110,7 +126,7 @@ const Drawer = ({ isOpen, children }) => {
               right: ".5em",
               height: "3em",
               width: "3em",
-							zIndex: "9999999",
+              zIndex: "9999999",
               cursor: "pointer",
               "&:hover": {
                 svg: {
@@ -123,6 +139,18 @@ const Drawer = ({ isOpen, children }) => {
           </Box>
           <Box
             css={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "5em",
+              background: "linear-gradient(to top, transparent, white 30%)",
+              zIndex: "99999",
+            }}
+          />
+          <Box
+            css={{
+              marginTop: "3em",
               height: "100%",
               width: "100%",
               zIndex: "20000",

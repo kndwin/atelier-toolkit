@@ -7,7 +7,7 @@ export const InThisProposalTemplate = (props) => {
     title: "In this Proposal...",
     description: `...we have provided pricing and process around the creation and production of eight products.\n\nTo arrive at these unit costs, we considered the direction provided in the emails back and forth with ${customer}${
       contactName ? `, ${contactName}` : ""
-    }, referencing the products discuessed, ingredient and packaging styles\n\nWe are confident in the setup and sourcing of the supply chain for these eight products`,
+    }, referencing the products discussed, ingredient and packaging styles\n\nWe are confident in the setup and sourcing of the supply chain for these eight products`,
   };
   return (
     <Page>

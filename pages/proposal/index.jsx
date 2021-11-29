@@ -1,20 +1,11 @@
 import { styled } from "@stitches/react";
-import React, { useEffect, useRef } from "react";
-
 import { Box, Layout } from "components";
-import { useDrawer, useLayout } from "hooks";
 import { ProposalTemplatesContent, Form } from "components/Pages/proposals";
 
 const Proposals = (props) => {
-  const { setDrawer } = useDrawer();
-
-  useEffect(() => {
-    setDrawer(true);
-  }, []);
-
   return (
     <Layout sidedraw={<Form />} printContent pushContent>
-			<ProposalTemplates />
+      <ProposalTemplates />
     </Layout>
   );
 };

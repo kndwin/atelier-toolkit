@@ -94,6 +94,7 @@ export const useForm = () => {
     };
     let newPricing;
     let currPricing = pricing;
+
     if (pricing?.length == 0) {
       newPricing = new Array(arrayLength).fill(defaultPrice);
     } else if (pricing.length < arrayLength) {

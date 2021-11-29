@@ -27,20 +27,21 @@ export const Form = (props) => {
           css={{ width: "100%" }}
         />
       </Box>
-      <Box css={{ marginTop: "1em" }}>
+      <Box css={{ display: "flex", flexDirection: "column", marginTop: "1em" }}>
         <Text css={{ fontWeight: "bold" }}>PRODUCTS AND PRICING</Text>
         <Box
           css={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gridGap: "1em",
+						justifyItems: "end"
           }}
         >
           <Input
             value={pricing.length}
             onChange={(e) => setNumberOfPrices(Number(e.target.value))}
             placeholder="How many products are there?"
-            css={{ width: "100%" }}
+						css={{ width: "100%", height: "40px"  }}
             type="number"
             min="0"
           />
@@ -85,13 +86,13 @@ export const Form = (props) => {
 export const ProductPricingDetail = (props) => {
   const {
     pricing,
-		setPricing,
+    setPricing,
     removeProduct,
     addPriceToProduct,
     updatePriceInProduct,
     removePriceFromProduct,
-		setNumberOfPrices,
-	} = useForm();
+    setNumberOfPrices,
+  } = useForm();
 
   const handleUpdateProduct = ({ index, type, payload }) => {
     const newPricing = [...pricing];
@@ -154,11 +155,13 @@ export const ProductPricingDetail = (props) => {
                 }
               />
             </Box>
-            {prices?.map(({ id: priceId, moq, cost, rrp }) => (
+            {prices?.map(({ id: priceId, moq, cost, rrp }, index) => (
               <Box
                 css={{
                   display: "grid",
-                  gridTemplateColumns: "33% repeat(2, 1fr) 2em",
+                  gridTemplateColumns: `33% repeat(2, 1fr) ${
+                    index == 0 ? "" : "2em"
+                  }`,
                   gridGap: ".25em",
                 }}
               >
@@ -207,12 +210,14 @@ export const ProductPricingDetail = (props) => {
                     })
                   }
                 />
-                <Cross
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    removePriceFromProduct({ id: productId, priceId });
-                  }}
-                />
+                {index != 0 && (
+                  <Cross
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      removePriceFromProduct({ id: productId, priceId });
+                    }}
+                  />
+                )}
               </Box>
             ))}
             <Box
@@ -242,7 +247,6 @@ export const ProductPricingDetail = (props) => {
               </Button>
               <Button
                 onClick={() => removeProduct({ id: productId })}
-                theme="red"
                 css={{
                   width: "100%",
                   display: "flex",

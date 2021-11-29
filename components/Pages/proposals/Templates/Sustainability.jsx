@@ -52,7 +52,7 @@ export const SustainabilityTemplate = () => {
             We offer the ability to carbon offset every product that moves
             through our supply chains. We will conduct a carbon impact study of
             each product across the supply chain from creation of components
-            materials and shipping to your DC. We will then offer a carbon offet
+            materials and shipping to your DC. We will then offer a carbon offset
             option to render the product carbon neutral.
             <br />
             <br />
