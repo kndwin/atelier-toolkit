@@ -7,12 +7,22 @@ const formVar = makeVar({
   error: "",
   address: "",
   SOWPriceAndRange: [],
+  SOWDevelopmentFee: 1500,
+  SOWOrderQuantity: 1000,
   doubleChecked: false,
 });
 
 export const useForm = () => {
-  const { pricing, currency, error, address, SOWPriceAndRange, doubleChecked } =
-    useReactiveVar(formVar);
+  const {
+    pricing,
+    currency,
+    error,
+    address,
+    SOWPriceAndRange,
+    doubleChecked,
+    SOWDevelopmentFee,
+    SOWOrderQuantity,
+  } = useReactiveVar(formVar);
   const setAddress = (address) => {
     formVar({ ...formVar(), address });
   };
@@ -98,6 +108,15 @@ export const useForm = () => {
   const setSOWPriceAndRange = (SOWPriceAndRange) => {
     formVar({ ...formVar(), SOWPriceAndRange });
   };
+
+  const setSOWDevelopmentFee = (SOWDevelopmentFee) => {
+    formVar({ ...formVar(), SOWDevelopmentFee });
+  };
+
+  const setSOWOrderQuantity = (SOWOrderQuantity) => {
+    formVar({ ...formVar(), SOWOrderQuantity });
+  };
+
   const setError = (error) => {
     formVar({ ...formVar(), error });
   };
@@ -125,5 +144,9 @@ export const useForm = () => {
     setDoubleChecked,
     SOWPriceAndRange,
     setSOWPriceAndRange,
+    SOWDevelopmentFee,
+    setSOWDevelopmentFee,
+		SOWOrderQuantity,
+		setSOWOrderQuantity
   };
 };

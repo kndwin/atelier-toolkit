@@ -1,4 +1,4 @@
-import { Page, Box, Text } from "components";
+import { Page, Box, Text, Span } from "components";
 import { useCustomer, useForm } from "hooks";
 
 const MAX_PRODUCTS = 12;
@@ -17,7 +17,6 @@ export const StatementOfWorkTemplates = (props) => {
 const FrontPage = (props) => {
   const { address } = useForm();
   const { customer } = useCustomer();
-  console.log({ address });
   return (
     <Page orientation="portrait" aspectRatio="A4" withBorder>
       <Box
@@ -99,9 +98,10 @@ const Initials = (
   </Box>
 );
 const Description = (props) => {
-  const { SOWPriceAndRange } = useForm();
+  const { SOWPriceAndRange, SOWOrderQuantity } = useForm();
+  const { customer } = useCustomer();
   const maxProductsReached = SOWPriceAndRange.length >= MAX_PRODUCTS;
-  console.log({ maxProductsReached, SOWPriceAndRange });
+
   return (
     <Page orientation="portrait" aspectRatio="A4" withBorder>
       {Initials}
@@ -131,8 +131,9 @@ const Description = (props) => {
           <br />
           This statement of work represents the specification, terms and
           estimates of cost, time and product componentry for the design,
-          development and establishment of supply chains for 1 product for
-          CLIENT NAME.
+          development and establishment of supply chains for{" "}
+          {SOWPriceAndRange?.length} product for
+          <Span> {customer}</Span>
         </Text>
         <Text bold>PRODUCTS</Text>
         <Box css={{ gridColumn: "span 2" }}>
@@ -248,7 +249,7 @@ const Description = (props) => {
               <Text bold css={{ marginBottom: "1em" }}>
                 ORDER QUANTITY
               </Text>
-              <Text>1000</Text>
+              <Text>{Number(SOWOrderQuantity).toLocaleString()}</Text>
             </Box>
           </>
         )}
@@ -258,7 +259,8 @@ const Description = (props) => {
 };
 
 const Invoice = (props) => {
-  const { SOWPriceAndRange } = useForm();
+  const { SOWPriceAndRange, SOWDevelopmentFee } = useForm();
+  const { customer } = useCustomer();
   const maxProductsReached = SOWPriceAndRange.length >= MAX_PRODUCTS;
 
   return (
@@ -307,8 +309,16 @@ const Invoice = (props) => {
 
             <Text>1. </Text>
             <Text>Development fee</Text>
-            <Text>1,500</Text>
-            <Text>1 X 1,5000 Development fee</Text>
+            <Text>
+              $
+              {Number(
+                SOWPriceAndRange?.length * SOWDevelopmentFee
+              ).toLocaleString()}
+            </Text>
+            <Text>
+              {SOWPriceAndRange?.length} x $
+              {Number(SOWDevelopmentFee).toLocaleString()} Development fee
+            </Text>
 
             <Text>2. </Text>
             <Text>Production Samples Delievered</Text>
@@ -337,7 +347,7 @@ const Invoice = (props) => {
             <Box css={{ gridColumn: "span 2" }} />
 
             <Text css={{ gridColumn: "span 4" }}>
-              Above prices are excluding GST. Lip Syrup is responsible for
+              Above prices are excluding GST. {customer} is responsible for
               payment of GST where applicable.
             </Text>
           </Box>
@@ -350,8 +360,9 @@ const Invoice = (props) => {
             <br />
             <br />
             If E XD PTY LTD is unable to complete the work by the time scales
-            indicated on any quotation then it will inform Lip Syrup in writing.
-            Any time scales supplied in quotation are best estimates only.
+            indicated on any quotation then it will inform {customer} in
+            writing. Any time scales supplied in quotation are best estimates
+            only.
           </Text>
         </Box>
       </Box>

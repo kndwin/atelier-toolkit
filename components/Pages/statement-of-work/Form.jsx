@@ -5,8 +5,16 @@ import { v4 } from "uuid";
 
 export const Form = (props) => {
   const { customer, setCustomer } = useCustomer();
-  const { setSOWPriceAndRange, SOWPriceAndRange, address, setAddress } =
-    useForm();
+  const {
+    setSOWPriceAndRange,
+    SOWPriceAndRange,
+    address,
+    setAddress,
+    SOWDevelopmentFee,
+    setSOWDevelopmentFee,
+		SOWOrderQuantity,
+		setSOWOrderQuantity,
+  } = useForm();
 
   const addPriceAndRange = (e) => {
     const newPriceAndRange = [...SOWPriceAndRange];
@@ -39,7 +47,7 @@ export const Form = (props) => {
         onChange={(e) => setAddress(e.target.value)}
         value={address}
         css={{ width: "100%", height: "10em" }}
-        placeholder="Enter company name or individual's name here."
+        placeholder="Enter company's address here."
       />
     </Box>
   );
@@ -56,12 +64,12 @@ export const Form = (props) => {
     setSOWPriceAndRange(newPriceAndRange);
   };
 
-	const removePriceAndRange = ({ id }) => {
-		const newPriceAndRange = SOWPriceAndRange.filter(
-			(priceAndRange) => priceAndRange.id !== id
-		);
-		setSOWPriceAndRange(newPriceAndRange);
-	}
+  const removePriceAndRange = ({ id }) => {
+    const newPriceAndRange = SOWPriceAndRange.filter(
+      (priceAndRange) => priceAndRange.id !== id
+    );
+    setSOWPriceAndRange(newPriceAndRange);
+  };
 
   const pricingAndRange = (
     <Box>
@@ -102,6 +110,33 @@ export const Form = (props) => {
       </Button>
     </Box>
   );
+
+  const orderQuantity = (
+		<Box css={{ display: "flex", flexDirection: "column", marginTop: "1em" }}>
+      <Text css={{ fontWeight: "bold" }}>ORDER QUANTITY</Text>
+      <Input
+				min={0}
+				type="number"
+        value={SOWOrderQuantity}
+        onChange={(e) => setSOWOrderQuantity(e.target.value)}
+        css={{ width: "100%" }}
+        placeholder="Enter the order quantity here"
+      />
+    </Box>
+  );
+  const developmentFee = (
+		<Box css={{ display: "flex", flexDirection: "column", marginTop: "1em" }}>
+      <Text css={{ fontWeight: "bold" }}>DEVELOPMENT FEE</Text>
+      <Input
+				min={0}
+				type="number"
+        value={SOWDevelopmentFee}
+        onChange={(e) => setSOWDevelopmentFee(e.target.value)}
+        css={{ width: "100%" }}
+        placeholder="Enter the development fee here"
+      />
+    </Box>
+  );
   return (
     <Box
       css={{
@@ -114,6 +149,8 @@ export const Form = (props) => {
     >
       <Text as="h2">Statement of Work</Text>
       {party}
+			{orderQuantity}
+			{developmentFee}
       {pricingAndRange}
     </Box>
   );
